@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="btn btn-success">New Recipie</div>
+    </div>
+</div>
+<hr>
+<div  class="row">
+    <div class="col-xs-12">
+      <a *ngFor="let singleRecipie of recipies" href="#" class="list-group-item clearfix">
+          <div class="pull-left">
+              <h4 class="list-group-item-heading">{{singleRecipie.name}}</h4>
+              <p class="list-group-item-text">{{singleRecipie.description}}</p>
+          </div>
+          <span class="pull-right">
+              <img [src]="singleRecipie.imagePath" class="img-responsive" style="max-height: 50px;" alt="">
+          </span>
+      </a>
+    </div>
+</div>
+<app-recipie-item></app-recipie-item>
