@@ -2,7 +2,9 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <app-recipies *ngIf="activeSubpage === 'Recipies'"></app-recipies>      
+      <app-recipies 
+      (recipieDetails)="($event)"
+      *ngIf="activeSubpage === 'Recipies'"></app-recipies>      
       <app-shopping-list  *ngIf="activeSubpage === 'Shopping list'"></app-shopping-list>
     </div>
   </div>
