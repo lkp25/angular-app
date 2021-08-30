@@ -1,1 +1,9 @@
-<p>recipie-item works!</p>
+<a  href="#" class="list-group-item clearfix">
+    <div class="pull-left">
+        <h4 class="list-group-item-heading">{{singleRp.name}}</h4>
+        <p class="list-group-item-text">{{singleRp.description}}</p>
+    </div>
+    <span class="pull-right">
+        <img [src]="singleRp.imagePath" class="img-responsive" style="max-height: 50px;" alt="">
+    </span>
+</a>
