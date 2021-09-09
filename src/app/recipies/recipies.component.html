@@ -5,7 +5,7 @@
     <div class="col-md-7">
         <app-recipie-detail 
         *ngIf="selectedRecipie; else infoText"
-        [details]='selectedRecipie'
+        [recipie]='selectedRecipie'
         >
         </app-recipie-detail>
         <ng-template #infoText>

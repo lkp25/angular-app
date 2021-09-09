@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Injectable } from '@angular/core';
+import { Recipie } from '../recipe-model';
+import { RecipieService } from '../recipie.service';
 
 
 @Component({
@@ -6,13 +8,19 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './recipie-detail.component.html',
   styleUrls: ['./recipie-detail.component.css']
 })
+
+@Injectable()
 export class RecipieDetailComponent implements OnInit {
-  @Input() details
+  @Input() recipie: Recipie
   
-  constructor() { }
+  constructor(private RecipieService: RecipieService) { }
   
   ngOnInit(): void {
     
+  }
+
+  onAddToShoppingList(){
+    this.RecipieService.addIngredientsToShoppingList(this.recipie.ingredients)
   }
   
 
