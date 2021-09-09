@@ -10,13 +10,10 @@ import { RecipieService } from '../recipie.service';
 export class RecipieListComponent implements OnInit {
   recipies: Recipie[]
   
-  @Output() recipieSelectedRepeat = new EventEmitter<object>()
-  constructor(private RecipieService:RecipieService) { }
+   constructor(private RecipieService:RecipieService) { }
 
   ngOnInit(): void {
     this.recipies = this.RecipieService.getRecipies()
   }
-  addDetails(details:object){
-    this.recipieSelectedRepeat.emit(details)
-  }
+  
 }
