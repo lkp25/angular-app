@@ -4,7 +4,7 @@ import { RecipiesComponent } from "./recipies/recipies.component";
 import { ShoppingListComponent } from "./shopping-list/shopping-list.component";
 
 const appRoutes: Routes = [
-    {path: '', redirectTo: '/recipies'},
+    {path: '', redirectTo: '/recipies', pathMatch: 'full'},
     {path: 'recipies', component: RecipiesComponent},
     {path: 'shopping-list', component: ShoppingListComponent}
 ]
