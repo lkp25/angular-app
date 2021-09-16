@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Recipie } from '../recipe-model';
 import { RecipieService } from '../recipie.service';
 
@@ -10,10 +11,16 @@ import { RecipieService } from '../recipie.service';
 export class RecipieListComponent implements OnInit {
   recipies: Recipie[]
   
-   constructor(private RecipieService:RecipieService) { }
+   constructor(
+     private RecipieService:RecipieService,
+     private router:Router,
+     private route: ActivatedRoute
+     ) { }
 
   ngOnInit(): void {
     this.recipies = this.RecipieService.getRecipies()
   }
-  
+  onNewRecipie(){
+    this.router.navigate(['new'], {relativeTo: this.route})
+  }
 }
