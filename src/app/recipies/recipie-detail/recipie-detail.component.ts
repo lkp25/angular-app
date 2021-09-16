@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Injectable } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Recipie } from '../recipe-model';
 import { RecipieService } from '../recipie.service';
 
@@ -11,12 +12,22 @@ import { RecipieService } from '../recipie.service';
 
 
 export class RecipieDetailComponent implements OnInit {
-  @Input() recipie: Recipie
+  recipie: Recipie
+  id: number
   
-  constructor(private RecipieService: RecipieService) { }
+  constructor(
+    private RecipieService: RecipieService,
+    private route: ActivatedRoute,
+    ) { }
   
   ngOnInit(): void {
-    
+    //id will be set to load a recipie from a service
+    this.route.params.subscribe(
+      (params: Params)=>{
+        this.id = +params['id']
+        this.recipie = this.RecipieService.getRecipie(this.id)
+      }
+    )
   }
 
   onAddToShoppingList(){

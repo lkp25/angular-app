@@ -33,6 +33,9 @@ export class RecipieService{
     getRecipies(){
         return this.recipies.slice() //return a copy
     }
+    getRecipie(id:number){
+        return this.recipies[id]
+    }
     addIngredientsToShoppingList(ingredients: Ingredient[]){
         this.slService.addIngredients(ingredients)
     }
