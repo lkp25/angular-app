@@ -9,7 +9,7 @@ import { RecipieService } from '../recipie.service';
   styleUrls: ['./recipie-detail.component.css']
 })
 
-@Injectable()
+
 export class RecipieDetailComponent implements OnInit {
   @Input() recipie: Recipie
   
