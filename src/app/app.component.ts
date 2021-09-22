@@ -7,9 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'myapp';
-  activeSubpage = 'Recipies'
-
-  loadNewPage(event){
-    this.activeSubpage = event.itemName
-  }
+  
 }
