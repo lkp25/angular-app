@@ -40,4 +40,8 @@ export class RecipieDetailComponent implements OnInit {
     this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route})
   }
 
+  onDelete(){
+    this.RecipieService.deleteRecipie(this.id)
+  }
+
 }

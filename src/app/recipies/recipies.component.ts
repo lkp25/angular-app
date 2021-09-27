@@ -6,7 +6,7 @@ import { RecipieService } from './recipie.service';
   selector: 'app-recipies',
   templateUrl: './recipies.component.html',
   styleUrls: ['./recipies.component.css'],
-  providers: [RecipieService]
+ 
 })
 export class RecipiesComponent implements OnInit{
   selectedRecipie: Recipie

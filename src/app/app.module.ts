@@ -15,6 +15,7 @@ import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { AppRoutingModule } from './app.routing-module';
 import { RecipieStartComponent } from './recipies/recipie-start/recipie-start.component';
 import { RecipieEditComponent } from './recipies/recipie-edit/recipie-edit.component';
+import { RecipieService } from './recipies/recipie.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { RecipieEditComponent } from './recipies/recipie-edit/recipie-edit.compo
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule
   ],
-  providers: [ShoppingListService],
+  providers: [ShoppingListService, RecipieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

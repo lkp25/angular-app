@@ -18,6 +18,11 @@ export class RecipieListComponent implements OnInit {
      ) { }
 
   ngOnInit(): void {
+     this.RecipieService.recipiesChanged.subscribe(
+      (recipies: Recipie[])=>{
+        this.recipies = recipies
+      }
+    )
     this.recipies = this.RecipieService.getRecipies()
   }
   onNewRecipie(){

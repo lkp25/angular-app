@@ -3,8 +3,18 @@
     <form [formGroup]="recipieForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="col-xs-12">
-          <button type="submit" class="btn btn-success">Save</button>
-          <button type="button" class="btn btn-danger">Cancel</button>
+          
+          <button 
+          type="submit" 
+          class="btn btn-success"
+          [disabled]="!recipieForm.valid"
+          >Save</button>
+
+          <button 
+          type="button" 
+          class="btn btn-danger"
+          (click)="onCancel()"
+          >Cancel</button>
         </div>
       </div>
       <div class="row">
@@ -29,10 +39,18 @@
               id="imagePath"
               formControlName="imagePath"
               type="text"
+              #imagePath
             />
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <img [src]="imagePath.value" class="img-responsive" />
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-xs-12">
           <div class="form-group">
@@ -52,38 +70,45 @@
       <!-- FORM ARRAY -->
       <div class="row">
         <div class="col-xs-12" formArrayName="ingredients">
-
-            <!-- this blueprint is replicated for each ingredient -->
-          <div 
-          class="row" 
-          *ngFor="let ingredientCtrl of controls; let i = index"
-          [formGroupName]="i"
+          <!-- this blueprint is replicated for each ingredient -->
+          <div
+            class="row"
+            *ngFor="let ingredientCtrl of controls; let i = index"
+            [formGroupName]="i"
           >
             <div class="col-xs-8">
-              <input 
-              class="form-control" 
-              type="text" 
-              formControlName="name"/>
+              <input class="form-control" type="text" formControlName="name" />
             </div>
             <div class="col-xs-2">
-              <input 
-              class="form-control" 
-              type="number" 
-              formControlName="amount"/>
+              <input
+                class="form-control"
+                type="number"
+                formControlName="amount"
+              />
             </div>
             <div class="col-xs-2">
-              <button type="button" class="btn btn-danger">X</button>
+              <button 
+              (click)="removeControl(i)"
+              type="button" 
+              class="btn btn-danger">X
+            </button>
             </div>
-
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-xs-12">
+              <button 
+              (click)="onAddIngredient()"
+              type="button" 
+              class="btn btn-success">
+                add ingredient
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-xs-12">
-          <img src="" class="img-responsive" />
-        </div>
-      </div>
+      
     </form>
   </div>
 </div>
