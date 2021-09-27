@@ -31,4 +31,10 @@ export class ShoppingListService{
         this.ingredients[index] = newIngredient
         this.ingredientsChanged.next(this.ingredients.slice())
     }
+    deleteIngredient(index: number){
+        this.ingredients.splice(index, 1)
+        // pass this info to subject so that view can update!!!
+        this.ingredientsChanged.next(this.ingredients.slice())
+        
+    }
 }
