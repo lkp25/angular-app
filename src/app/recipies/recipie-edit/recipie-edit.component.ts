@@ -56,9 +56,13 @@ export class RecipieEditComponent implements OnInit {
     this.recipieForm = new FormGroup({
       'name' : new FormControl(recipieName),
       'imagePath' : new FormControl(recipieImagePath),
-      'description' : new FormControl(recipieDescription)
-     
+      'description' : new FormControl(recipieDescription),
+      'ingredients': recipieIngredients
     })
+  }
+
+  get controls(){
+    return (<FormArray>this.recipieForm.get('ingredients')).controls
   }
 
   onSubmit(){
