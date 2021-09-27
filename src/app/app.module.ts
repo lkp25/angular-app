@@ -9,7 +9,7 @@ import { RecipieDetailComponent } from './recipies/recipie-detail/recipie-detail
 import { RecipieItemComponent } from './recipies/recipie-list/recipie-item/recipie-item.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownDirective } from './shared/dropdown-directive';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { AppRoutingModule } from './app.routing-module';
@@ -31,7 +31,7 @@ import { RecipieEditComponent } from './recipies/recipie-edit/recipie-edit.compo
     RecipieEditComponent
   ],
   imports: [
-    BrowserModule, FormsModule, AppRoutingModule
+    BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule
   ],
   providers: [ShoppingListService],
   bootstrap: [AppComponent]
