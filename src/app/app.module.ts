@@ -16,7 +16,8 @@ import { AppRoutingModule } from './app.routing-module';
 import { RecipieStartComponent } from './recipies/recipie-start/recipie-start.component';
 import { RecipieEditComponent } from './recipies/recipie-edit/recipie-edit.component';
 import { RecipieService } from './recipies/recipie.service';
-import { HttpClientModule} from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [

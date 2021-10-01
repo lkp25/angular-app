@@ -11,29 +11,33 @@ export class RecipieService{
     recipieSelected = new Subject<Recipie>()
     
     private  recipies: Recipie[] = [
-        new Recipie(
-            "sznitzel", 
-            'dsadsadsadsadsadsadad', 
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS06q-hmeYAq1TfsTBYFAtLDevYpKYQuoyM_w&usqp=CAU",
-            [
-                new Ingredient('shznitzel', 2)
-            ]
-            ),
-        new Recipie(
-            "dfdsfsdfde", 
-            'dsadaaaaaaaaaaaaAAAAAAAadad', 
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS06q-hmeYAq1TfsTBYFAtLDevYpKYQuoyM_w&usqp=CAU",
-            [
-                new Ingredient('french fries', 20),
-                new Ingredient('bread', 1)
-            ]
-            )
+        // new Recipie(
+        //     "sznitzel", 
+        //     'dsadsadsadsadsadsadad', 
+        //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS06q-hmeYAq1TfsTBYFAtLDevYpKYQuoyM_w&usqp=CAU",
+        //     [
+        //         new Ingredient('shznitzel', 2)
+        //     ]
+        //     ),
+        // new Recipie(
+        //     "dfdsfsdfde", 
+        //     'dsadaaaaaaaaaaaaAAAAAAAadad', 
+        //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS06q-hmeYAq1TfsTBYFAtLDevYpKYQuoyM_w&usqp=CAU",
+        //     [
+        //         new Ingredient('french fries', 20),
+        //         new Ingredient('bread', 1)
+        //     ]
+        //     )
     ]
 
     constructor(
         private slService: ShoppingListService,
         private router: Router
         ){}
+    loadRecipiesFromServer(recipies){
+        this.recipies = recipies
+        this.recipiesChanged.next(this.recipies.slice())
+    }
 
     getRecipies(){
         return this.recipies.slice() //return a copy
