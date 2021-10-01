@@ -17,9 +17,9 @@ export class DataStorageService {
 
 
     storeRecipies(){
-      console.log(this.recipies);
+      console.log(this.recipieService.getRecipies());
       const body = {
-         recipies: this.recipies
+         recipies: this.recipieService.getRecipies()
       }
       this.http.post('http://localhost:8080/save-all', body).subscribe(response => {
         console.log(response);
