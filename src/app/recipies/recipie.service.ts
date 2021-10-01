@@ -59,13 +59,16 @@ export class RecipieService{
         this.recipies[index].description = newRecipie.description
         this.recipies[index].imagePath = newRecipie.imagePath
         console.log(this.recipies[index].ingredients);
+        console.log(newRecipie.ingredients);
+
         
-        this.recipies[index].ingredients.forEach((ingredient, index) =>{
+        this.recipies[index].ingredients = newRecipie.ingredients
+        // .forEach((ingredient, index) =>{
             // console.log(ingredient.name);
             
-            ingredient.name = newRecipie.ingredients[index].name
-            ingredient.amount = newRecipie.ingredients[index].amount
-        }) 
+        //     ingredient.name = newRecipie.ingredients[index].name
+        //     ingredient.amount = newRecipie.ingredients[index].amount
+        // }) 
         this.recipiesChanged.next(this.recipies.slice())
     }
     deleteRecipie(id: number){
