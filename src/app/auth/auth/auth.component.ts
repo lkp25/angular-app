@@ -32,15 +32,23 @@ export class AuthComponent implements OnInit {
 
     this.isLoading = true
     if(this.isLoginMode){
-      this.authService.signup(userData).subscribe(ans => {
-        console.log(ans)        
+      this.authService.login(userData).subscribe(
+        successResponse => {
+        console.log(successResponse)        
         this.isLoading = false
+      }, errorResponse => {
+        this.isLoading = false
+
       })
       
     } else {
-      this.authService.signup(userData).subscribe(ans => {
-        console.log(ans)        
+      this.authService.signup(userData).subscribe(
+        successResponse => {
+        console.log(successResponse)        
         this.isLoading = false
+      }, errorResponse => {
+        this.isLoading = false
+
       })
     }
     form.reset()
