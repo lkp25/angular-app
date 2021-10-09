@@ -1,17 +1,30 @@
 <div class="row">
     <div class="col-xs-12">
-        <form action="">
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
             <div class="form-group">
                 <label for="email">email</label>
-                <input type="email" id="email" class="form-control">
+                <input 
+                type="email" 
+                id="email" 
+                ngModel
+                required
+                name="name"
+                class="form-control">
+                
                 <label for="password">password</label>
-                <input type="password" id="password" class="form-control">
+                <input 
+                type="password"
+                name="pass "
+                ngModel
+                required 
+                id="password" 
+                class="form-control">
             </div>
             <div class="div">
-                <button class="btn btn-primary" type="button">sign up</button>
+                <button [disabled]="!f.valid" class="btn btn-primary" type="submit">{{ isLogin ? "login": " register"}}</button>
             </div>
             <div class="div">
-                <button class="btn btn-primary" type="button">switch to login</button>
+                <button (click)="onSwitchMode()" class="btn btn-primary" type="button"> {{ isLogin ? "switch to register": "switch to login"}}</button>
             </div>
         </form>
     </div>
