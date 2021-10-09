@@ -18,6 +18,7 @@ import { RecipieEditComponent } from './recipies/recipie-edit/recipie-edit.compo
 import { RecipieService } from './recipies/recipie.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthComponent } from './auth/auth/auth.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner/loading-spinner.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { AuthComponent } from './auth/auth/auth.component';
     RecipieStartComponent,
     RecipieEditComponent,
     AuthComponent,
+    LoadingSpinnerComponent,
     
   ],
   imports: [
