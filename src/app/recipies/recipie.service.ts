@@ -63,12 +63,7 @@ export class RecipieService{
 
         
         this.recipies[index].ingredients = newRecipie.ingredients
-        // .forEach((ingredient, index) =>{
-            // console.log(ingredient.name);
-            
-        //     ingredient.name = newRecipie.ingredients[index].name
-        //     ingredient.amount = newRecipie.ingredients[index].amount
-        // }) 
+       
         this.recipiesChanged.next(this.recipies.slice())
     }
     deleteRecipie(id: number){

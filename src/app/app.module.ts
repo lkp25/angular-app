@@ -17,6 +17,7 @@ import { RecipieStartComponent } from './recipies/recipie-start/recipie-start.co
 import { RecipieEditComponent } from './recipies/recipie-edit/recipie-edit.component';
 import { RecipieService } from './recipies/recipie.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthComponent } from './auth/auth/auth.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     ShoppingEditComponent,
     RecipieStartComponent,
     RecipieEditComponent,
+    AuthComponent,
     
   ],
   imports: [

@@ -91,7 +91,7 @@ export class RecipieEditComponent implements OnInit {
       this.recipieService.addRecipie(this.recipieForm.value)
     }
     
-    // this.router.navigate(['/recipies'])
+    this.router.navigate(['/recipies'])
   }
   
   onCancel(){

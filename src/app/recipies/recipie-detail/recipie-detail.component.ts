@@ -42,6 +42,8 @@ export class RecipieDetailComponent implements OnInit {
 
   onDelete(){
     this.RecipieService.deleteRecipie(this.id)
+    console.log('delete recipe requested');
+    
   }
 
 }
