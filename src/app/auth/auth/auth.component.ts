@@ -8,7 +8,7 @@ import { AuthService } from './auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
-  isLogin = true
+  isLoginMode = true
 
   constructor(private authService: AuthService) { 
   }
@@ -16,16 +16,22 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
   }
   onSwitchMode(){
-    this.isLogin = !this.isLogin
+    this.isLoginMode = !this.isLoginMode
   }
 
   onSubmit(form: NgForm){
     console.log(form.value);
+
     const userData = {
       name: form.value.name,
       pass: form.value.pass
     }
-    this.authService.signup(userData)
+    if(this.isLoginMode){
+      this.authService.login(userData)
+
+    } else {
+      this.authService.signup(userData)
+    }
     form.reset()
   }
 }

@@ -14,5 +14,14 @@ export class AuthService{
         
         )
     }
+    login(userData: {name: string, pass: string}){
+        
+        this.http.post('http://localhost:8080/login',{
+            name: userData.name,
+            pass: userData.pass
+        }).subscribe(ans => console.log(ans)
+        
+        )
+    }
 
 }

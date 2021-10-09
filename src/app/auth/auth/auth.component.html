@@ -21,10 +21,10 @@
                 class="form-control">
             </div>
             <div class="div">
-                <button [disabled]="!f.valid" class="btn btn-primary" type="submit">{{ isLogin ? "login": " register"}}</button>
+                <button [disabled]="!f.valid" class="btn btn-primary" type="submit">{{ isLoginMode ? "login": " register"}}</button>
             </div>
             <div class="div">
-                <button (click)="onSwitchMode()" class="btn btn-primary" type="button"> {{ isLogin ? "switch to register": "switch to login"}}</button>
+                <button (click)="onSwitchMode()" class="btn btn-primary" type="button"> {{ isLoginMode ? "switch to register": "switch to login"}}</button>
             </div>
         </form>
     </div>
