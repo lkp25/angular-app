@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {  NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Component({
@@ -12,7 +13,10 @@ export class AuthComponent implements OnInit {
   isLoading = false
   error = ''
   
-  constructor(private authService: AuthService) { 
+  constructor(
+    private authService: AuthService,
+    private router: Router
+    ) { 
   }
   
   ngOnInit(): void {
@@ -34,11 +38,14 @@ export class AuthComponent implements OnInit {
     }
 
     this.isLoading = true
+    //LOGIN
     if(this.isLoginMode){
       this.authService.login(userData).subscribe(
         successResponse => {
         console.log(successResponse)        
         this.isLoading = false
+        //redirect on success
+        this.router.navigate(['/recipies'])
       }
       , errorResponse => {
         this.isLoading = false
@@ -48,6 +55,7 @@ export class AuthComponent implements OnInit {
       }
       )
       
+    //SIGNUP
     } else {
       this.authService.signup(userData).subscribe(
         successResponse => {
