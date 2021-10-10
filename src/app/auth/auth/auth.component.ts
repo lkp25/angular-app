@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 export class AuthComponent implements OnInit {
   isLoginMode = true
   isLoading = false
+  error = ''
   
   constructor(private authService: AuthService) { 
   }
@@ -18,6 +19,8 @@ export class AuthComponent implements OnInit {
   }
   onSwitchMode(){
     this.isLoginMode = !this.isLoginMode
+    // console.log(this.authService.user.subscribe());
+    
   }
   
   onSubmit(form: NgForm){
@@ -36,21 +39,34 @@ export class AuthComponent implements OnInit {
         successResponse => {
         console.log(successResponse)        
         this.isLoading = false
-      }, errorResponse => {
+      }
+      , errorResponse => {
         this.isLoading = false
-
-      })
+        this.error = "wrong credentials"
+        console.log(this.error);
+        this.resetError()
+      }
+      )
       
     } else {
       this.authService.signup(userData).subscribe(
         successResponse => {
-        console.log(successResponse)        
-        this.isLoading = false
-      }, errorResponse => {
-        this.isLoading = false
-
+          console.log(successResponse)        
+          this.isLoading = false
+        }, errorResponse => {
+          this.isLoading = false
+          this.error = "user exists"
+          console.log(this.error);
+          this.resetError()
       })
     }
     form.reset()
+  }
+
+  resetError(){
+    setTimeout(() => {
+      this.error = ''
+      
+    }, 3000);
   }
 }
