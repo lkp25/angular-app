@@ -17,6 +17,7 @@ export class AuthInterceptorService implements HttpInterceptor {
     let token: string
     this.authService.user.pipe(take(1))
     .subscribe(user =>{
+        if(!user) return next.handle(req)
     console.log(user);        
       token = user.token       
     })     
