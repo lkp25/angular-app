@@ -16,9 +16,10 @@ import { AppRoutingModule } from './app.routing-module';
 import { RecipieStartComponent } from './recipies/recipie-start/recipie-start.component';
 import { RecipieEditComponent } from './recipies/recipie-edit/recipie-edit.component';
 import { RecipieService } from './recipies/recipie.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthComponent } from './auth/auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner/loading-spinner.component';
+import { AuthInterceptorService } from './auth/auth/auth-interceptor.service';
 
 
 @NgModule({
@@ -41,7 +42,15 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule, HttpClientModule
   ],
-  providers: [ShoppingListService, RecipieService],
+  providers: [
+    ShoppingListService,
+     RecipieService,
+     {
+       provide: HTTP_INTERCEPTORS,
+       useClass: AuthInterceptorService,
+       multi: true
+    }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
