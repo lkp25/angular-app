@@ -4,6 +4,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { User } from './user.model';
+import { Router } from '@angular/router';
 
 interface AuthResponseData {
   expIn: string;
@@ -18,7 +19,10 @@ export class AuthService {
   //at any point of time not just when it changes and was emitted on login.
   user = new BehaviorSubject<User>(null);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+      private http: HttpClient,
+      private router: Router
+      ) {}
 
   signup(userData: { name: string; pass: string }) {
     return this.http.post('http://localhost:8080/signup', {
@@ -51,11 +55,28 @@ export class AuthService {
 
           //emit the constructed user with his token
           this.user.next(user);
+          //store credentials in LS:
+          localStorage.setItem("userData", JSON.stringify(user))
         })
       );
   }
 
+  //must be called early when the entire app starts:
+  autoLogin(){
+      const userData = JSON.parse(localStorage.getItem("userData"))
+      //if user data is not present in LS or the token expired - do nothing
+      if(!userData) return
+      if(+userData._tokenExpDate < new Date().getTime()) return
+      //else emit the valid credentials - still logged in:
+      this.user.next(userData)
+      console.log('autologin');
+      
+  }
 
+  //must be called upon logout
+  autoLogout(){
+
+  }
 
   logout() {
     //   for deleting refresh token on server!
@@ -77,6 +98,8 @@ export class AuthService {
 
     //for the view update:
     this.user.next(null);
+    //navigate away from current route to login route:
+    this.router.navigate(['/auth'])
   }
 
 
@@ -105,6 +128,8 @@ export class AuthService {
             )
             
             this.user.next(refreshedUser)
+            //store refreshed credentials in LS:
+            localStorage.setItem("userData", JSON.stringify(refreshedUser))
         }
       });
   }
