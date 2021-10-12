@@ -19,6 +19,7 @@
                     </ul>
                 </li>
                 <li *ngIf="isAuthenticated" (click)="onLogout()"><a>logout</a></li>
+                <li *ngIf="isAuthenticated" (click)="onRefreshToken()"><a>refresh</a></li>
                  
             </ul>
         </div>

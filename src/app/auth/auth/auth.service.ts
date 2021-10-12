@@ -55,6 +55,8 @@ export class AuthService {
       );
   }
 
+
+
   logout() {
     //   for deleting refresh token on server!
     let refreshToken: string;
@@ -67,13 +69,43 @@ export class AuthService {
     this.http
       .post('http://localhost:8080/logout', {
         //request body
-        refreshToken: refreshToken
-      }).subscribe(response =>{
-          console.log(response);
-          
+        refreshToken: refreshToken,
       })
+      .subscribe((response) => {
+        console.log(response);
+      });
 
     //for the view update:
     this.user.next(null);
+  }
+
+
+
+  refreshToken() {
+    let userData: User
+    
+    this.user.pipe(take(1)).subscribe((user) => {
+      console.log(user);
+      //pass the user object to server so that access token can be replaced using refresh token      
+      userData = user
+    });
+    this.http
+      .post<User>('http://localhost:8080/refreshToken', {
+        userData: userData
+      })
+      .subscribe((refreshedUserData) => {
+        {
+            
+            console.log(refreshedUserData);
+            const refreshedUser = new User(
+                refreshedUserData.name, 
+                refreshedUserData._token, 
+                refreshedUserData._tokenExpDate, 
+                refreshedUserData.refreshToken
+            )
+            
+            this.user.next(refreshedUser)
+        }
+      });
   }
 }
