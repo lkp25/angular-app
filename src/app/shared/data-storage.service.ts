@@ -32,27 +32,25 @@ export class DataStorageService {
     }
 
     getAllRecipes(){
+      // get the valid token first from auth service IF PRESENT!
+      // it is stored in user Subject so 1 time subscribtion is necessary:
       let token: string
       this.authService.user.pipe(take(1))
       .subscribe(user =>{
-        console.log(user);
-        
-        token = user.token
-       
-      })
-      
-      
-      
+        console.log(user);   
+        //HERE we call the token which will be set to null if it expired,
+        // as stated in User model - user.token is a getter function  
+        token = user.token       
+      })      
 
+      // with the token aquired, send a request attaching it as auth header.
       this.http.get<Recipie[]>('http://localhost:8080/get-all', 
       {
         headers: new HttpHeaders().append('Authorization', `Bearer ${token}`)
       })
+      //subscribe to the response and forward it on success to the recipieService:
       .subscribe(response => {
         console.log(response);
-
-        //subscribe t the user Subject from authService to get token!
-        //
         
         this.recipieService.loadRecipiesFromServer(response)
       })
