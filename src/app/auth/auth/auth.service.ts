@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, tap } from 'rxjs/operators';
-import { BehaviorSubject, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { User } from './user.model';
 import { Router } from '@angular/router';
@@ -17,7 +17,9 @@ interface AuthResponseData {
 export class AuthService {
   //behavior subject because data service needs access to user value
   //at any point of time not just when it changes and was emitted on login.
-  user = new BehaviorSubject<User>(null);
+  user = new BehaviorSubject<User>(null)
+  logoutTimer = new Subject<number>()
+  private tokenExpirationTimer: any
 
   constructor(
       private http: HttpClient,
@@ -53,6 +55,11 @@ export class AuthService {
           const token = data.accessToken;
           const user = new User(userData.name, token, expDate, refreshToken);
 
+          //renew autologout timer:
+          const timeout = +data.expIn - new Date().getTime()
+          this.autoLogout(timeout)
+          this.logoutTimer.next(timeout)
+
           //emit the constructed user with his token
           this.user.next(user);
           //store credentials in LS:
@@ -73,9 +80,12 @@ export class AuthService {
       
   }
 
-  //must be called upon logout
-  autoLogout(){
-
+  //timer calling the logout:
+  autoLogout(expirationDuration: number){
+      //create or renew the timeout on every function call
+    this.tokenExpirationTimer = setTimeout(() => {
+        this.logout()
+    }, expirationDuration);
   }
 
   logout() {
@@ -100,6 +110,12 @@ export class AuthService {
     this.user.next(null);
     //navigate away from current route to login route:
     this.router.navigate(['/auth'])
+    //remove user from LS to prevent autologin
+    localStorage.removeItem('userData')
+    //clear autoLogout timeout:
+    if(this.tokenExpirationTimer){
+        clearTimeout(this.tokenExpirationTimer)    }
+    this.tokenExpirationTimer = null
   }
 
 
@@ -126,7 +142,13 @@ export class AuthService {
                 refreshedUserData._tokenExpDate, 
                 refreshedUserData.refreshToken
             )
-            
+            //clear old timout, set new timout for logout:
+            clearTimeout(this.tokenExpirationTimer)
+            this.tokenExpirationTimer = null
+            const newTimeout = +refreshedUserData._tokenExpDate - new Date().getTime()
+            this.autoLogout(newTimeout)
+            this.logoutTimer.next(newTimeout)
+
             this.user.next(refreshedUser)
             //store refreshed credentials in LS:
             localStorage.setItem("userData", JSON.stringify(refreshedUser))
