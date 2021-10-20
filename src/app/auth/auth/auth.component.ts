@@ -51,6 +51,8 @@ export class AuthComponent implements OnInit {
         this.isLoading = false
         this.error = "wrong credentials"
         console.log(this.error);
+        console.log(errorResponse);
+        
         this.resetError()
       }
       )

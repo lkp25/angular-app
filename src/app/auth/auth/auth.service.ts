@@ -43,8 +43,8 @@ export class AuthService {
       .pipe(
         //error catching pipe
         catchError((receivedError) => {
-          let error = `the error received is ${receivedError}`;
-          return throwError(error);
+          
+          return throwError(receivedError);
         }),
         //tap the response object and fill the user Subject
         // with valid token from server, emit this new user to all functions
