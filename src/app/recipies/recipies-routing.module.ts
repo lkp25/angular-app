@@ -7,7 +7,7 @@ import { RecipieStartComponent } from "./recipie-start/recipie-start.component";
 import { RecipiesComponent } from "./recipies.component";
 
 const routes: Routes = [{
-    path: 'recipies', component: RecipiesComponent, 
+    path: '', component: RecipiesComponent, 
     canActivate: [AuthGuard],
     children: [
         {path: '', component: RecipieStartComponent},

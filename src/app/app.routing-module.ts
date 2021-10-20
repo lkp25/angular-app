@@ -1,11 +1,15 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AuthComponent } from "./auth/auth/auth.component";
+
+
 
 const appRoutes: Routes = [
-    {path: '', redirectTo: '/recipies', pathMatch: 'full'},      
-    {path: 'auth', component: AuthComponent}
-
+    {path: '', redirectTo: '/recipies', pathMatch: 'full'},
+    {
+        path: 'recipies', 
+        loadChildren: ()=> import('./recipies/recipies.module')
+        .then(module => module.RecipiesModule)
+    }
 ]
 
 @NgModule({
