@@ -9,10 +9,8 @@ import { RecipieService } from './recipies/recipie.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptorService } from './auth/auth/auth-interceptor.service';
-import { RecipiesModule } from './recipies/recipies.module';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
-import { AuthModule } from './auth/auth/auth.module';
+
 
 @NgModule({
   declarations: [    
@@ -20,15 +18,10 @@ import { AuthModule } from './auth/auth/auth.module';
     HeaderComponent  
   ],
   imports: [
-    BrowserModule,
-    
-    AppRoutingModule,
-   
-    HttpClientModule,
-  
-    ShoppingListModule,
-    SharedModule,
-    AuthModule
+    BrowserModule,    
+    AppRoutingModule,   
+    HttpClientModule,    
+    SharedModule    
   ],
   providers: [
     ShoppingListService,
