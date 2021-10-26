@@ -1,12 +1,18 @@
+// import { trigger, transition, useAnimation } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import {  NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { bounceAnim } from '../../app.animations'
 import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  styleUrls: ['./auth.component.css'],
+  animations: [
+    bounceAnim
+  ]
+
 })
 export class AuthComponent implements OnInit {
   isLoginMode = true

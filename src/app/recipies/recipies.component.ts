@@ -1,4 +1,7 @@
+import { useAnimation , transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { bounce } from 'ng-animate';
+
 import { Recipie } from './recipe-model';
 import { RecipieService } from './recipie.service';
 
@@ -6,6 +9,10 @@ import { RecipieService } from './recipie.service';
   selector: 'app-recipies',
   templateUrl: './recipies.component.html',
   styleUrls: ['./recipies.component.css'],
+ 
+  animations: [
+    trigger('bounce', [transition('void => *', useAnimation(bounce))])
+  ]
  
 })
 export class RecipiesComponent implements OnInit{

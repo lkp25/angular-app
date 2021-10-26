@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 
 
@@ -16,7 +16,7 @@ const appRoutes: Routes = [
         loadChildren: ()=> import('./auth/auth/auth.module')
         .then(module => module.AuthModule)
     },
-    
+
     {
         path: 'shopping-list', 
         loadChildren: ()=> import('./shopping-list/shopping-list.module')
@@ -26,7 +26,7 @@ const appRoutes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(appRoutes)
+        RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules, initialNavigation: 'enabled' })
     ],
     exports: [RouterModule]
 })

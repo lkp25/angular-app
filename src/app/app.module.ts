@@ -10,6 +10,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthInterceptorService } from './auth/auth/auth-interceptor.service';
 import { SharedModule } from './shared/shared.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -18,10 +19,11 @@ import { SharedModule } from './shared/shared.module';
     HeaderComponent  
   ],
   imports: [
-    BrowserModule,    
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),    
     AppRoutingModule,   
     HttpClientModule,    
-    SharedModule    
+    SharedModule,
+    BrowserAnimationsModule   
   ],
   providers: [
     ShoppingListService,

@@ -1,4 +1,5 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { take } from 'rxjs/operators';
 import { AuthService } from './auth/auth/auth.service';
 
@@ -9,6 +10,11 @@ import { AuthService } from './auth/auth/auth.service';
 })
 export class AppComponent implements OnInit{
   title = 'myapp';
+  constructor(
+    private authService: AuthService,
+    @Inject(PLATFORM_ID) private platformId 
+    ) {}
+
   @HostListener('window:click', ['$event'])
   onClick(){
     this.authService.user.pipe(take(1)).subscribe((userData) => {
@@ -21,11 +27,11 @@ export class AppComponent implements OnInit{
     
   }
   
-  constructor(private authService: AuthService) {
-    
-  }
 
   ngOnInit(){
-    this.authService.autoLogin()
+    if(isPlatformBrowser(this.platformId)){
+
+      this.authService.autoLogin()
+    }
   }
 }
