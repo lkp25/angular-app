@@ -1,1 +1,12 @@
 <p>crypto works!</p>
+<p>current Kadena Price is:</p>
+<span *ngIf="cryptoPrices">
+    {{cryptoPrices.kda | number : '1.2-2' | currency:'USD'}}
+</span>
+<span *ngIf="!cryptoPrices">loading...</span>
+
+<p>current Bitcoin price is:</p>
+<span *ngIf="cryptoPrices">
+    {{cryptoPrices.btc | currency:'USD'}}
+</span>
+<span *ngIf="!cryptoPrices">loading...</span>

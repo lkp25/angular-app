@@ -8,14 +8,16 @@ import { CryptoService } from './crypto.service';
   styleUrls: ['./crypto.component.css']
 })
 export class CryptoComponent implements OnInit {
+  public cryptoPrices
 
   constructor(
     private cryptoService: CryptoService
   ) { }
 
   ngOnInit(): void {
-    this.cryptoService.getAllCrypto().subscribe(data => {
+     this.cryptoService.getAllCrypto().subscribe(data => {
       console.log(data)
+      this.cryptoPrices = data
     },
     error => console.log(error)
     )
