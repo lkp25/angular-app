@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { CryptoComponent } from "./crypto/crypto.component";
 
 
 
@@ -21,6 +22,12 @@ const appRoutes: Routes = [
         path: 'shopping-list', 
         loadChildren: ()=> import('./shopping-list/shopping-list.module')
         .then(module => module.ShoppingListModule)
+    },
+    {
+        path: 'crypto', 
+        loadChildren: ()=> import('./crypto/crypto.module')
+        .then(module => module.CryptoModule),
+        component: CryptoComponent
     }
 ]
 
