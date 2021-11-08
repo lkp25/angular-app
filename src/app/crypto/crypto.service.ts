@@ -10,7 +10,9 @@ export class CryptoService {
     private http: HttpClient
   ) { }
 
+  
   getAllCrypto(){
+    
     return this.http.get<any>('http://localhost:8080/crypto/all')
     // {
     //   headers: new HttpHeaders().append('Authorization', `Bearer ${token}`)

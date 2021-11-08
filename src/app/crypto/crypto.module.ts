@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { CryptoComponent } from './crypto.component';
 
 
@@ -10,6 +10,7 @@ import { CryptoComponent } from './crypto.component';
   ],
   imports: [
     CommonModule
-  ]
+  ],
+  providers:[DatePipe]
 })
 export class CryptoModule { }

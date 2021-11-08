@@ -11,6 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './auth/auth/auth-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DatePipe } from '@angular/common';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule   
   ],
   providers: [
+    DatePipe,
     ShoppingListService,
     RecipieService,
     {
