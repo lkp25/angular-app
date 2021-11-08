@@ -10,3 +10,9 @@
     {{cryptoPrices.btc | currency:'USD'}}
 </span>
 <span *ngIf="!cryptoPrices">loading...</span>
+
+
+
+<!-- CHART LOGIC -->
+<canvas #myChart></canvas>
+<button (click)="doChart()">make a chart!</button>
