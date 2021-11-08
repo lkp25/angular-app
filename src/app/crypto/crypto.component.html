@@ -1,18 +1,30 @@
-<p>crypto works!</p>
-<p>current Kadena Price is:</p>
-<span *ngIf="cryptoPrices">
-    {{cryptoPrices.kda | number : '1.2-2' | currency:'USD'}}
-</span>
-<span *ngIf="!cryptoPrices">loading...</span>
+  <section id="kadena_section">
+      <p>current Kadena Price is:</p>
+        <span *ngIf="cryptoPrices">
+            {{cryptoPrices.kda | number : '1.2-2' | currency:'USD'}}
+        </span>
+        <span *ngIf="!cryptoPrices">loading...</span>
+        <div>
+            <!-- CHART LOGIC -->
+            <canvas #kadenaChart></canvas>
+            <!-- <button (click)="doChart()">make a chart!</button> -->
+        </div>
+  </section>
 
-<p>current Bitcoin price is:</p>
-<span *ngIf="cryptoPrices">
-    {{cryptoPrices.btc | currency:'USD'}}
-</span>
-<span *ngIf="!cryptoPrices">loading...</span>
+  <section id="bitcoin_section">
+      <div>
+          <p>current Bitcoin price is:</p>
+          <span *ngIf="cryptoPrices">
+              {{cryptoPrices.btc | currency:'USD'}}
+          </span>
+          <span *ngIf="!cryptoPrices">loading...</span>
+      </div>
+      <div>
+        <!-- CHART LOGIC -->
+        <canvas #bitcoinChart></canvas>
+        <!-- <button (click)="doChart()">make a chart!</button> -->
+    </div>
+
+  </section>
 
 
-
-<!-- CHART LOGIC -->
-<canvas #myChart></canvas>
-<button (click)="doChart()">make a chart!</button>

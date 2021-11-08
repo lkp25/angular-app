@@ -10,7 +10,6 @@ import { CryptoComponent } from './crypto.component';
   ],
   imports: [
     CommonModule
-  ],
-  providers:[DatePipe]
+  ]
 })
 export class CryptoModule { }

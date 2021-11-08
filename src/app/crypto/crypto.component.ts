@@ -1,7 +1,14 @@
 import { DatePipe } from '@angular/common';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-import { interval } from 'rxjs';
+import { response } from 'express';
+import { Observable, observable } from 'rxjs';
 
 import { CryptoService } from './crypto.service';
 
@@ -16,78 +23,163 @@ export class CryptoComponent implements OnInit, OnDestroy {
   constructor(
     private cryptoService: CryptoService,
     private datePipe: DatePipe
-    ) {
-      Chart.register(...registerables)
-    }
-  @ViewChild('myChart', {static:true}) chart: ElementRef
-  chartCTX
-  myChart
-
+  ) {
+    Chart.register(...registerables);
+  }
+  @ViewChild('kadenaChart', { static: true }) kadenaChartRef: ElementRef;
+  kadenaChart;
+  kadenaChartLive;
   kdaPriceData = {
     price: [],
-    time: [ 
-      
-    ]
-  }
+    time: [],
+  };
+
+  @ViewChild('bitcoinChart', { static: true }) bitcoinChartRef: ElementRef;
+  bitcoinChart;
+  bitcoinChartLive;
+  btcPriceData = {
+    price: [],
+    time: [],
+  };
 
   ngOnInit(): void {
-    
-
-
     //initial load
-    this.getAllCryptoPrices()
+    this.getAllCryptoPrices();
+    //load chart/s
+    this.showKDAChart();
+    this.showBTCChart();
+
     //interval load
     this.cryptoInterval = setInterval(() => {
-     this.getAllCryptoPrices()
+      this.getAllCryptoPrices();
     }, 10000);
   }
 
-  getAllCryptoPrices(){
+
+  //generic method for updating price for any crypto
+  updateCurrentTickValueForCrypto(
+    freshData,
+    cryptoChart,
+    cryptoPriceDataArray,
+    cryptoName
+  ) {
+    //only 10 points on the chart
+    if (cryptoPriceDataArray.price.length >= 10) {
+      cryptoPriceDataArray.price.shift();
+      cryptoPriceDataArray.time.shift();
+    }
+    //add newest data
+    cryptoPriceDataArray.price.push(freshData[cryptoName]);
+    cryptoPriceDataArray.time.push(
+      this.datePipe.transform(Date.now(), 'HH:mm:ss')
+    );
+    //WILL AUTOMATICALLY UPDATE ON ANY CHANGES TO THE ARRAYS!
+    cryptoChart?.update();
+  }
+
+  getAllCryptoPrices() {
     this.cryptoService.getAllCrypto().subscribe(
-      (data) => {        
+      (data) => {
         this.cryptoPrices = data;
 
-        //only 10 points on the chart
-        if(this.kdaPriceData.price.length >= 10){
-          this.kdaPriceData.price.shift() 
-          this.kdaPriceData.time.shift() 
-        }  
-        //add newest data
-        this.kdaPriceData.price.push(data.kda)
-        this.kdaPriceData.time.push(this.datePipe.transform(Date.now(),'shortTime'))        
-        //WILL AUTOMATICALLY UPDATE ON ANY CHANGES TO THE ARRAYS!
-        this.myChart.update()
+        //update for kadena:
+        this.updateCurrentTickValueForCrypto(
+          data,
+          this.kadenaChartLive,
+          this.kdaPriceData,
+          'kda'
+        );
+        //update for bicoin:
+        this.updateCurrentTickValueForCrypto(
+          data,
+          this.bitcoinChartLive,
+          this.btcPriceData,
+          'btc'
+        );
       },
       (error) => console.log(error)
     );
   }
-  ngOnDestroy(){
-    clearInterval(this.cryptoInterval)
-  }
 
- 
-  doChart(){
-    this.chartCTX = this.chart.nativeElement.getContext('2d')
-    // console.log(this.chart.nativeElement);
-    // console.log(this.chartCTX);
-    // this.chartCTX.canvas.clear()
-    this.myChart = new Chart(this.chartCTX, {
-      type: 'line', //horizontalBar, doughnut, line pie radar polar area 
+  showKDAChart() {
+    // const http$ = Observable.create(observer =>{
+    //   fetch('https://jsonplaceholder/posts')
+    //   .then(response => {
+    //     return response.json()
+    //   }).then(body => {
+    //     //emit value in observable
+    //     observer.next(body)
+    //   }).catch(err => observer.error(err))
+
+    // })
+
+    this.kadenaChart = this.kadenaChartRef.nativeElement.getContext('2d');
+   
+    this.kadenaChartLive = new Chart(this.kadenaChart, {
+      type: 'line', //horizontalBar, doughnut, line pie radar polar area
       data: {
         labels: this.kdaPriceData.time,
-        datasets: [{
-          label: 'KDA price',
-          data: this.kdaPriceData.price
-        }]
-      },
-      options: {}
-    }) 
-    console.log(this.chartCTX.canvas);
-    
-  }
-  
-  
-  
+        datasets: [
+          {
+            label: 'KDA price',
+            data: this.kdaPriceData.price,
 
-  
+            backgroundColor: 'green',
+            borderColor: 'green',
+            hoverBorderWidth: 5,
+            hoverBorderColor: 'red',
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Kadena tick-price chart',
+            padding: {
+              top: 10,
+              bottom: 30,
+            },
+          },
+        },
+      },
+    });
+  }
+  showBTCChart() {
+    this.bitcoinChart = this.bitcoinChartRef.nativeElement.getContext('2d');
+
+    this.bitcoinChartLive = new Chart(this.bitcoinChart, {
+      type: 'line', //horizontalBar, doughnut, line pie radar polar area
+      data: {
+        labels: this.btcPriceData.time,
+        datasets: [
+          {
+            label: 'KDA price',
+            data: this.btcPriceData.price,
+
+            backgroundColor: 'red',
+            borderColor: 'red',
+            hoverBorderWidth: 3,
+            hoverBorderColor: 'green',
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Bitcoin tick-price chart',
+            padding: {
+              top: 10,
+              bottom: 30,
+            },
+          },
+        },
+      },
+    });
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.cryptoInterval);
+  }
 }
