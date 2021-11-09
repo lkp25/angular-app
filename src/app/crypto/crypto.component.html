@@ -27,7 +27,10 @@
 
   </section>
 
-  <div *ngFor="let todo of filteredTodos | async">
+  <div *ngFor="let todo of filteredTodosHigh | async">
+      <p>{{todo | json}}</p>
+  </div>
+  <div *ngFor="let todo of filteredTodosSmall | async">
       <p>{{todo | json}}</p>
   </div>
 

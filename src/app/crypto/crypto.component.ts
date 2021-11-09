@@ -9,7 +9,7 @@ import {
 import { Chart, registerables } from 'chart.js';
 
 import { noop, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, shareReplay} from 'rxjs/operators';
 
 import { CryptoService } from './crypto.service';
 
@@ -34,7 +34,8 @@ export class CryptoComponent implements OnInit, OnDestroy {
     price: [],
     time: [],
   };
-  filteredTodos: Observable<any[]>
+  filteredTodosHigh: Observable<any[]>
+  filteredTodosSmall: Observable<any[]>
   
 
   @ViewChild('bitcoinChart', { static: true }) bitcoinChartRef: ElementRef;
@@ -64,23 +65,28 @@ export class CryptoComponent implements OnInit, OnDestroy {
       map(res => {
          res.length = 10
          return res
-      })
+      }),
+      //add to share all subscriptions as one stream
+      shareReplay()
     )
-    this.filteredTodos = todos$.pipe(
+    this.filteredTodosHigh = todos$.pipe(
       map(data => data.filter((todo)=>todo.id >= 6))
     )
+    this.filteredTodosSmall = todos$.pipe(
+      map(data => data.filter((todo)=>todo.id < 6))
+    )
     
     
-    http$.subscribe(
-      data => console.log(data),
-      noop,
-      ()=> console.log('completed')      
-    )
-    todos$.subscribe(
-      data => console.log(data),
-      noop,
-      ()=> console.log('completed')      
-    )
+    // http$.subscribe(
+    //   data => console.log(data),
+    //   noop,
+    //   ()=> console.log('completed')      
+    // )
+    // todos$.subscribe(
+    //   data => console.log(data),
+    //   noop,
+    //   ()=> console.log('completed')      
+    // )
 
 
     //initial load
