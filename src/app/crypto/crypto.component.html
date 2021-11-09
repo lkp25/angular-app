@@ -27,4 +27,8 @@
 
   </section>
 
+  <div *ngFor="let todo of filteredTodos | async">
+      <p>{{todo | json}}</p>
+  </div>
+
 

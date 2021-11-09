@@ -7,8 +7,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
-import { response } from 'express';
-import { Observable, observable } from 'rxjs';
+
+import { noop, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { CryptoService } from './crypto.service';
 
@@ -33,6 +34,8 @@ export class CryptoComponent implements OnInit, OnDestroy {
     price: [],
     time: [],
   };
+  filteredTodos: Observable<any[]>
+  
 
   @ViewChild('bitcoinChart', { static: true }) bitcoinChartRef: ElementRef;
   bitcoinChart;
@@ -43,6 +46,43 @@ export class CryptoComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
+    function fetchData(url): Observable<any[]>{
+      return Observable.create(observer =>{
+        fetch(url)
+        .then(response => {
+          return response.json()
+        }).then(body => {
+          //emit value in observable and complete
+          observer.next(body)
+          observer.complete()
+        }).catch(err => observer.error(err))
+  
+      })
+    }
+    const http$ = fetchData('https://jsonplaceholder.typicode.com/todos')
+    const todos$ = http$.pipe(
+      map(res => {
+         res.length = 10
+         return res
+      })
+    )
+    this.filteredTodos = todos$.pipe(
+      map(data => data.filter((todo)=>todo.id >= 6))
+    )
+    
+    
+    http$.subscribe(
+      data => console.log(data),
+      noop,
+      ()=> console.log('completed')      
+    )
+    todos$.subscribe(
+      data => console.log(data),
+      noop,
+      ()=> console.log('completed')      
+    )
+
+
     //initial load
     this.getAllCryptoPrices();
     //load chart/s
@@ -61,7 +101,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
     freshData,
     cryptoChart,
     cryptoPriceDataArray,
-    cryptoName
+    cryptoNameAcronym
   ) {
     //only 10 points on the chart
     if (cryptoPriceDataArray.price.length >= 10) {
@@ -69,7 +109,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
       cryptoPriceDataArray.time.shift();
     }
     //add newest data
-    cryptoPriceDataArray.price.push(freshData[cryptoName]);
+    cryptoPriceDataArray.price.push(freshData[cryptoNameAcronym]);
     cryptoPriceDataArray.time.push(
       this.datePipe.transform(Date.now(), 'HH:mm:ss')
     );
@@ -102,16 +142,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
   }
 
   showKDAChart() {
-    // const http$ = Observable.create(observer =>{
-    //   fetch('https://jsonplaceholder/posts')
-    //   .then(response => {
-    //     return response.json()
-    //   }).then(body => {
-    //     //emit value in observable
-    //     observer.next(body)
-    //   }).catch(err => observer.error(err))
-
-    // })
+    
 
     this.kadenaChart = this.kadenaChartRef.nativeElement.getContext('2d');
    
@@ -181,5 +212,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.cryptoInterval);
+
+    
   }
 }
