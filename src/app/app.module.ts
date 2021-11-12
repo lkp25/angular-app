@@ -12,6 +12,7 @@ import { AuthInterceptorService } from './auth/auth/auth-interceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { DatePipe } from '@angular/common';
     AppRoutingModule,   
     HttpClientModule,    
     SharedModule,
-    BrowserAnimationsModule   
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [
     DatePipe,

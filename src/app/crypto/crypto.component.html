@@ -12,7 +12,7 @@
   </section>
 
   <section id="bitcoin_section">
-      <div>
+      <div hidden>
           <p>current Bitcoin price is:</p>
           <span *ngIf="cryptoPrices">
               {{cryptoPrices.btc | currency:'USD'}}
@@ -27,11 +27,6 @@
 
   </section>
 
-  <div *ngFor="let todo of filteredTodosHigh | async">
-      <p>{{todo | json}}</p>
-  </div>
-  <div *ngFor="let todo of filteredTodosSmall | async">
-      <p>{{todo | json}}</p>
-  </div>
+ 
 
 

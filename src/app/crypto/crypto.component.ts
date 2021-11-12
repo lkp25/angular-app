@@ -34,9 +34,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
     price: [],
     time: [],
   };
-  filteredTodosHigh: Observable<any[]>
-  filteredTodosSmall: Observable<any[]>
-  
+
 
   @ViewChild('bitcoinChart', { static: true }) bitcoinChartRef: ElementRef;
   bitcoinChart;
@@ -47,47 +45,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit(): void {
-    function fetchData(url): Observable<any[]>{
-      return Observable.create(observer =>{
-        fetch(url)
-        .then(response => {
-          return response.json()
-        }).then(body => {
-          //emit value in observable and complete
-          observer.next(body)
-          observer.complete()
-        }).catch(err => observer.error(err))
-  
-      })
-    }
-    const http$ = fetchData('https://jsonplaceholder.typicode.com/todos')
-    const todos$ = http$.pipe(
-      map(res => {
-         res.length = 10
-         return res
-      }),
-      //add to share all subscriptions as one stream
-      shareReplay()
-    )
-    this.filteredTodosHigh = todos$.pipe(
-      map(data => data.filter((todo)=>todo.id >= 6))
-    )
-    this.filteredTodosSmall = todos$.pipe(
-      map(data => data.filter((todo)=>todo.id < 6))
-    )
-    
-    
-    // http$.subscribe(
-    //   data => console.log(data),
-    //   noop,
-    //   ()=> console.log('completed')      
-    // )
-    // todos$.subscribe(
-    //   data => console.log(data),
-    //   noop,
-    //   ()=> console.log('completed')      
-    // )
-
+   
 
     //initial load
     this.getAllCryptoPrices();

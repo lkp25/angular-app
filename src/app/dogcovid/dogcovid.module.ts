@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RxjsComponent } from './rxjs.component';
+import { DogcovidComponent } from './dogcovid.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    RxjsComponent
+    DogcovidComponent
   ],
   imports: [
-    CommonModule, ReactiveFormsModule
+    CommonModule,
+    ReactiveFormsModule
   ]
 })
-export class RxjsModule { }
+export class DogcovidModule { }

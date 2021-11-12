@@ -1,0 +1,57 @@
+<p>dogcovid works!</p>
+
+<form [formGroup]="dogForm">
+  <label for="size"
+    >Dog Size
+    <select name="size" id="size"
+    formControlName="size"  placeholder="pizdanahuj">
+      <option value="big">big</option>
+      <option value="small">small</option>
+      <option value="avg">avg</option>
+    </select>
+  </label>
+  <br>
+  <label for="breed"
+    >Dog breed
+    <select name="breed" id="breed"
+    formControlName="breed"  >
+      <option value="jamnik">jamnik</option>
+      <option value="owca">owca   </option>
+      <option value="parch">parch</option>
+      <option value="szarik">szarik</option>
+    </select>
+  </label>
+  <br>
+  <label for="gender"
+    >Dog gender
+    <select name="gender" id="gender"
+    formControlName="gender"  >
+      <option value="suka" >suka</option>
+      <option value="pjes">pjes   </option>
+      <option value="other">other</option>
+      
+    </select>
+  </label>
+  <br>
+  <label for="name"
+    >Dog name
+    <input type="text" name="name" id="name" formControlName="name"  >
+  </label>
+  <br>
+  <p>czy ma jaja? 
+      <br>
+
+      <label for="jajanie"
+        >tak
+        <input type="radio" value="nie" name="jaja" id="jajanie" formControlName="jaja"  >
+      </label>
+      <br>
+      <label for="jajatak"
+        >nie
+        <input type="radio" value="tak" name="jaja" id="jajatak" formControlName="jaja"  >
+      </label>
+  </p>
+  <br>
+
+  <button type="button" (click)="submitDogForm()">Submit</button>
+</form>
