@@ -1,0 +1,9 @@
+.vaccine_block{
+    padding: 1rem;
+    background-color: gray;
+    cursor: pointer;
+}
+.active{
+    background-color: rgb(32, 167, 137);
+
+}

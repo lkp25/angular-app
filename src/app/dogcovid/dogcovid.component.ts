@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormControl, FormGroup } from '@angular/forms';
+import { DogcovidService, Vaccine } from './dogcovid.service';
 
 @Component({
   selector: 'app-dogcovid',
@@ -8,8 +9,10 @@ import { Form, FormControl, FormGroup } from '@angular/forms';
 })
 export class DogcovidComponent implements OnInit {
   dogForm: FormGroup
+  totalPrice: number
+  vaccines: Vaccine[] = this.dogcovidService.vaccinesArray
 
-  constructor() { }
+  constructor(private dogcovidService: DogcovidService) { }
 
   ngOnInit(): void {
     this.dogForm = new FormGroup({
@@ -25,6 +28,17 @@ export class DogcovidComponent implements OnInit {
 
   submitDogForm(){
     console.log(this.dogForm);
+    
+  }
+  
+  selectVaccine(vaccineElement: HTMLElement, vaccineDetails){
+    vaccineElement.classList.toggle('active')
+    console.log(vaccineElement);
+    if(vaccineElement.classList.contains('active')){
+      return this.dogcovidService.addToCart(vaccineDetails)
+    }
+    return this.dogcovidService.removeFromCart(vaccineDetails)
+
     
   }
   
