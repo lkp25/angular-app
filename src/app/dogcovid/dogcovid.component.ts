@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormControl, FormGroup } from '@angular/forms';
+import { Form, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { DogcovidService, Vaccine } from './dogcovid.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class DogcovidComponent implements OnInit {
       'gender': new FormControl(null),
       'name': new FormControl(null),
       'jaja': new FormControl(null),
-      
+      'vaccines': new FormArray([])      
     })
 
   }
@@ -36,8 +36,12 @@ export class DogcovidComponent implements OnInit {
     vaccineElement.classList.toggle('active')
     console.log(vaccineElement);
     if(vaccineElement.classList.contains('active')){
+      (<FormArray>this.dogForm.get('vaccines')).push(new FormControl(vaccineDetails))
       return this.dogcovidService.addToCart(vaccineDetails)
     }
+    (<FormArray>this.dogForm.get('vaccines'))
+    .removeAt(this.dogForm.value.vaccines
+      .findIndex((vaccine=> vaccineDetails.name === vaccine.name)))
     return this.dogcovidService.removeFromCart(vaccineDetails)
 
     
