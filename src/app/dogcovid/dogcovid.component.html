@@ -78,5 +78,6 @@
 
   <button type="button" (click)="submitDogForm()">Submit</button>
 </form>
+<p *ngIf="dogForm.get('vaccines').errors">{{ dogForm.get('vaccines').errors['notEnoughVaccines'] }}</p>
 <p>Łączna cena</p>
 <span>{{ totalPrice }}</span>

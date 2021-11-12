@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { DogcovidFormValidators } from './dogcovid-form-validators';
 import { DogcovidService, Vaccine } from './dogcovid.service';
 
 @Component({
@@ -17,12 +18,12 @@ export class DogcovidComponent implements OnInit {
   ngOnInit(): void {
     this.dogcovidService.totalToPay.subscribe(value => this.totalPrice = value)
     this.dogForm = new FormGroup({
-      'size': new FormControl(null),
-      'breed': new FormControl(null),
-      'gender': new FormControl(null),
-      'name': new FormControl(null),
-      'jaja': new FormControl(null),
-      'vaccines': new FormArray([])      
+      size: new FormControl(null),
+      breed: new FormControl(null),
+      gender: new FormControl(null),
+      name: new FormControl(null),
+      jaja: new FormControl(null),
+      vaccines: new FormArray([], DogcovidFormValidators.minNumOfElements)      
     })
 
   }
@@ -35,6 +36,7 @@ export class DogcovidComponent implements OnInit {
   selectVaccine(vaccineElement: HTMLElement, vaccineDetails){
     vaccineElement.classList.toggle('active')
     console.log(vaccineElement);
+
     if(vaccineElement.classList.contains('active')){
       (<FormArray>this.dogForm.get('vaccines')).push(new FormControl(vaccineDetails))
       return this.dogcovidService.addToCart(vaccineDetails)
