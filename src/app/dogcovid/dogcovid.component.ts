@@ -15,6 +15,7 @@ export class DogcovidComponent implements OnInit {
   constructor(private dogcovidService: DogcovidService) { }
 
   ngOnInit(): void {
+    this.dogcovidService.totalToPay.subscribe(value => this.totalPrice = value)
     this.dogForm = new FormGroup({
       'size': new FormControl(null),
       'breed': new FormControl(null),

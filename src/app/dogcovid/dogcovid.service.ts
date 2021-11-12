@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,19 +23,37 @@ export class DogcovidService {
       price: 2500
     }
   ]
-  cart: Vaccine[]
+  cart = []
+  totalToPay = new BehaviorSubject(0)
 
   constructor() { }
   
   addToCart(vaccineDetails){
+    this.cart.push(vaccineDetails)
+    this.calculateCartTotal()
+    console.log(this.totalToPay);
+   
     
   }
   removeFromCart(vaccineDetails){
-
+    this.cart = this.cart.filter((obj)=> obj.name !== vaccineDetails.name)
+    this.calculateCartTotal()
+    console.log(this.totalToPay);
+    
   }
-  getCartTotal():number{
-    return 
+  calculateCartTotal(){
+    if(this.cart.length <= 0){
+      this.totalToPay.next(0)
+      return 0
+    }
+    let totalToPay = 0
+    this.cart.forEach((item) => {
+      totalToPay += item.price    
+    })
+    this.totalToPay.next(totalToPay)
+    
   }
+  
 }
 
 
