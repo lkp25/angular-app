@@ -13,12 +13,15 @@ import { SharedModule } from './shared/shared.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ValidDirective } from './shared/valid.directive';
 
 
 @NgModule({
   declarations: [    
     AppComponent,
-    HeaderComponent  
+    HeaderComponent
+    
+
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),    
