@@ -34,11 +34,16 @@
     </select>
   </label>
   <br />
+
   <label for="name"
     >Dog name
     <input type="text" name="name" id="name" formControlName="name" />
-  </label>
+  </label>  
   <br />
+  <app-error-msg 
+  *ngIf="dogForm.errors" 
+  [msg]="dogForm.errors">
+  </app-error-msg>
   <p>
     czy ma jaja?
     <br />
@@ -78,7 +83,7 @@
 
   <button  type="button" (click)="submitDogForm()">Submit</button>
 </form>
-<app-error-msg *ngIf="dogForm.get('vaccines').errors" [msg]="dogForm.get('vaccines').errors['notEnoughVaccines']"></app-error-msg>
+<app-error-msg *ngIf="dogForm.get('vaccines').errors" [msg]="dogForm.get('vaccines').errors"></app-error-msg>
 <!-- <p *ngIf="dogForm.get('vaccines').errors">{{ dogForm.get('vaccines').errors['notEnoughVaccines'] }}</p> -->
 <p  >Łączna cena</p>
 <span>{{ totalPrice }}</span>

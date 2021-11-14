@@ -21,10 +21,10 @@ export class DogcovidComponent implements OnInit {
       size: new FormControl(null),
       breed: new FormControl(null),
       gender: new FormControl(null),
-      name: new FormControl(null, [DogcovidFormValidators.maxNameLength]),
+      name: new FormControl(null, ),
       jaja: new FormControl(null),
       vaccines: new FormArray([], [DogcovidFormValidators.minNumOfElements])      
-    })
+    }, [DogcovidFormValidators.maxNameLength])
 
   }
 
