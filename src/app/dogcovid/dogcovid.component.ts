@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Form, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DogcovidFormValidators } from './dogcovid-form-validators';
 import { DogcovidService, Vaccine } from './dogcovid.service';
 
@@ -10,6 +10,7 @@ import { DogcovidService, Vaccine } from './dogcovid.service';
 })
 export class DogcovidComponent implements OnInit {
   dogForm: FormGroup
+  
   totalPrice: number
   vaccines: Vaccine[] = this.dogcovidService.vaccinesArray
 
@@ -18,11 +19,11 @@ export class DogcovidComponent implements OnInit {
   ngOnInit(): void {
     this.dogcovidService.totalToPay.subscribe(value => this.totalPrice = value)
     this.dogForm = new FormGroup({
-      size: new FormControl(null),
-      breed: new FormControl(null),
-      gender: new FormControl(null),
-      name: new FormControl(null, ),
-      jaja: new FormControl(null),
+      size: new FormControl(null, [Validators.required]),
+      breed: new FormControl(null, [Validators.required]),
+      gender: new FormControl(null, [Validators.required]),
+      name: new FormControl(null, [Validators.required]),
+      jaja: new FormControl(null, [Validators.required]),
       vaccines: new FormArray([], [])      
     }, [
       DogcovidFormValidators.maxNameLength, 

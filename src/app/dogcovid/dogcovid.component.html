@@ -1,6 +1,6 @@
 <p>dogcovid works!</p>
 
-<form [formGroup]="dogForm">
+<form [formGroup]="dogForm" >
   <label for="size"
     >Dog Size
     <select
@@ -89,10 +89,10 @@
   *ngIf="dogForm.errors?.mefedronSmallDog" 
   [msg]="dogForm.errors['mefedronSmallDog']">
   </app-error-msg>
+  <app-error-msg *ngIf="dogForm.errors?.notEnoughVaccines" [msg]="dogForm.errors['notEnoughVaccines']"></app-error-msg>
 
-  <button  type="button" (click)="submitDogForm()">Submit</button>
+  <button  type="button" [disabled]="!dogForm.valid" (click)="submitDogForm()">Submit</button>
 </form>
-<app-error-msg *ngIf="dogForm.errors?.notEnoughVaccines" [msg]="dogForm.errors['notEnoughVaccines']"></app-error-msg>
 
 <p  >Łączna cena</p>
 <span>{{ totalPrice }}</span>
