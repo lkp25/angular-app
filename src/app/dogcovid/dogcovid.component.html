@@ -34,6 +34,7 @@
     </select>
   </label>
   <br />
+  
 
   <label for="name"
     >Dog name
@@ -41,15 +42,15 @@
   </label>  
   <br />
   <app-error-msg 
-  *ngIf="dogForm.errors" 
-  [msg]="dogForm.errors">
+  *ngIf="dogForm.errors?.nameTooLong" 
+  [msg]="dogForm.errors['nameTooLong']">
   </app-error-msg>
   <p>
     czy ma jaja?
     <br />
 
     <label for="jajanie"
-      >tak
+      >nie
       <input
         type="radio"
         value="nie"
@@ -60,7 +61,7 @@
     </label>
     <br />
     <label for="jajatak"
-      >nie
+      >tak
       <input
         type="radio"
         value="tak"
@@ -70,6 +71,10 @@
       />
     </label>
   </p>
+  <app-error-msg 
+  *ngIf="dogForm.errors?.jajaError" 
+  [msg]="dogForm.errors['jajaError']">
+  </app-error-msg>
   <br />
 
   <section class="vaccines" id="vaccines_section">
@@ -80,10 +85,14 @@
       </p>
     </div>
   </section>
+  <app-error-msg 
+  *ngIf="dogForm.errors?.mefedronSmallDog" 
+  [msg]="dogForm.errors['mefedronSmallDog']">
+  </app-error-msg>
 
   <button  type="button" (click)="submitDogForm()">Submit</button>
 </form>
-<app-error-msg *ngIf="dogForm.get('vaccines').errors" [msg]="dogForm.get('vaccines').errors"></app-error-msg>
-<!-- <p *ngIf="dogForm.get('vaccines').errors">{{ dogForm.get('vaccines').errors['notEnoughVaccines'] }}</p> -->
+<app-error-msg *ngIf="dogForm.errors?.notEnoughVaccines" [msg]="dogForm.errors['notEnoughVaccines']"></app-error-msg>
+
 <p  >Łączna cena</p>
 <span>{{ totalPrice }}</span>

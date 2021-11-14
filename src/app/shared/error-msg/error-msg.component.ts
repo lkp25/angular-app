@@ -6,12 +6,12 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./error-msg.component.css']
 })
 export class ErrorMsgComponent implements OnInit {
-  @Input() msg = null
-  msgRev = null 
+  @Input() msg
+  // msgRev = null 
   constructor() { }
 
   ngOnInit(): void {
-    this.msgRev = Object.values(this.msg)[0]
+    // this.msgRev = Object.values(this.msg)[0]
     
   }
 
