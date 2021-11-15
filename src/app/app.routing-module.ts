@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { CoursesComponent } from "./courses/courses.component";
 import { CryptoComponent } from "./crypto/crypto.component";
 import { DogcovidComponent } from "./dogcovid/dogcovid.component";
 import { RxjsComponent } from "./rxjs/rxjs.component";
@@ -42,6 +43,12 @@ const appRoutes: Routes = [
         loadChildren: ()=> import('./dogcovid/dogcovid.module')
         .then(module => module.DogcovidModule),
         component: DogcovidComponent
+    },
+    {
+        path: 'courses', 
+        loadChildren: ()=> import('./courses/courses.module')
+        .then(module => module.CoursesModule),
+        component: CoursesComponent
     }
 ]
 
