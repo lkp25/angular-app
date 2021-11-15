@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-step1',
@@ -7,7 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Step1Component implements OnInit {
 
-  constructor() { }
+  form = this.fb.group({
+    title: ['',[
+      Validators.required,
+      Validators.minLength(5),
+      Validators.maxLength(60)
+    
+    ]],
+
+  })
+
+  constructor(
+    private fb: FormBuilder
+  ) { }
 
   ngOnInit(): void {
   }

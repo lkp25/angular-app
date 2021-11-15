@@ -1,10 +1,19 @@
 <h1>create new course</h1>
 
-<!-- <mat-horizontal-stepper class="mat-elevation-z5" labelPosition="bottom">
-</mat-horizontal-stepper> -->
-    <ng-template matStepLabel>course landing page details</ng-template>
-    <app-step1></app-step1>
-    <app-step2></app-step2>
-    <app-step3></app-step3>
+<mat-stepper orientation="horizontal" class="mat-elevation-z5" labelPosition="bottom">
+    <mat-step>
+        <ng-template matStepLabel>course landing page details</ng-template>
 
-<mat-slider min="1" max="100" step="1" value="50"></mat-slider>
+        <app-step1></app-step1>
+        
+        <div class="stepper-buttons"> 
+            <button mat-raised-button color="primary" MatStepperNext>Continue to step 2</button>
+        </div>
+
+    </mat-step>
+
+<!-- 
+    <app-step2></app-step2>
+    <app-step3></app-step3> -->
+
+</mat-stepper>
