@@ -7,5 +7,6 @@
         <mat-hint align="end">
             {{title.value.length}} / 60
         </mat-hint>
+        <mat-error *ngIf="courseTitle.errors?.titleExists">title alredy in use</mat-error>
     </mat-form-field>
 </div>
