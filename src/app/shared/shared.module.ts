@@ -4,6 +4,7 @@ import { DropdownDirective } from "./dropdown-directive";
 import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner/loading-spinner.component";
 import { ErrorMsgComponent } from './error-msg/error-msg.component';
 import { ValidDirective } from "./valid.directive";
+import { MaterialModule } from "../material/material.module";
 
 @NgModule({
     declarations:[
@@ -12,13 +13,14 @@ import { ValidDirective } from "./valid.directive";
         ErrorMsgComponent,
         ValidDirective
     ],
-    imports: [CommonModule],
+    imports: [CommonModule, MaterialModule],
     exports: [
         LoadingSpinnerComponent,
         DropdownDirective,
         CommonModule,
         ValidDirective,
-        ErrorMsgComponent
+        ErrorMsgComponent,
+        MaterialModule
     ]
 })
 export class SharedModule{}

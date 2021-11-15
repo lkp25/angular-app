@@ -3,12 +3,19 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CoursesComponent } from './courses.component';
+import { Step1Component } from './step1/step1.component';
+import { Step2Component } from './step2/step2.component';
+import { Step3Component } from './step3/step3.component';
+
 
 
 
 @NgModule({
   declarations: [
-    CoursesComponent
+    CoursesComponent,
+    Step1Component,
+    Step2Component,
+    Step3Component
   ],
   imports: [
     CommonModule, SharedModule, ReactiveFormsModule
