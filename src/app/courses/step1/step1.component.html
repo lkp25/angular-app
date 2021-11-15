@@ -1,6 +1,5 @@
 <div [formGroup]="form">
     <mat-form-field>
-
         <input #title matInput 
         formControlName="title"
         placeholder="Course title" type="text">
@@ -9,4 +8,29 @@
         </mat-hint>
         <mat-error *ngIf="courseTitle.errors?.titleExists">title alredy in use</mat-error>
     </mat-form-field>
+<br>
+    <!-- DATEPICKER -->
+    <mat-form-field>
+        <input formControlName="releasedAt" matInput [matDatepicker]="releaseDatePicker" placeholder="release date">
+        <mat-datepicker-toggle matSuffix [for]="releaseDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #releaseDatePicker></mat-datepicker>
+    </mat-form-field>
+<br>
+    <!-- /CHeCKBOX -->
+    <mat-checkbox  color="primary" formControlName="downloadsAllowed">
+        Downlads Allowed?
+    </mat-checkbox>
+<br>
+    <!-- TEXTAREA -->
+    <mat-form-field appearance="outline">
+        <textarea matInput formControlName="longDescription" placeholder="Description">
+
+        </textarea>
+    </mat-form-field>
+
+
+    <!-- DEBUG -->
+    <div class="form-value">
+        {{form.value | json}}
+    </div>
 </div>

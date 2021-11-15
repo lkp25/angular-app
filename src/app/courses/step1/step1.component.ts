@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CoursesService } from '../courses.service';
 import { courseTitleValidator } from '../validators/course-title.validator';
@@ -9,9 +9,9 @@ import { courseTitleValidator } from '../validators/course-title.validator';
   styleUrls: ['./step1.component.css']
 })
 export class Step1Component implements OnInit {
-
-  form = this.fb.group({
-    title: ['',{ 
+  public a = "sssssssss"
+ public form = this.fb.group({
+    title: ['sss',{ 
       validators:[
         Validators.required,
         Validators.minLength(2),
@@ -21,6 +21,9 @@ export class Step1Component implements OnInit {
       asyncValidators:[courseTitleValidator(this.coursesService)],
       updateOn: "blur"
   }],
+    releasedAt: [new Date(), Validators.required],
+    downloadsAllowed: [false, Validators.requiredTrue],
+    longDescription: ['', [Validators.required, Validators.minLength(3)]]
 
   })
 

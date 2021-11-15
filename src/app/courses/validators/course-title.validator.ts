@@ -12,9 +12,7 @@ export function courseTitleValidator(courses: CoursesService): AsyncValidatorFn{
        .pipe(
            //getting all from jsonplaceholder
            map(todos => {
-                console.log(todos);
-                console.log(control.value);
-                 
+                              
                const findSameTitle = todos
                .find((todo=>{
                    

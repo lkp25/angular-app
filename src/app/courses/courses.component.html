@@ -1,19 +1,33 @@
 <h1>create new course</h1>
 
-<mat-stepper orientation="horizontal" class="mat-elevation-z5" labelPosition="bottom">
-    <mat-step>
+<!-- linear true? only pass to next step after first is valid -->
+<mat-stepper [linear]="true" orientation="horizontal" class="mat-elevation-z5" labelPosition="bottom">
+   <!-- we need to get to the form placed in app-step-1 and check if it is valid
+can do this by placing local reference on app-step-1 and accessing it's form
+property in [stepControl]
+-->
+    <mat-step [stepControl]="aaa.form">
         <ng-template matStepLabel>course landing page details</ng-template>
-
-        <app-step1></app-step1>
+        
+        <app-step1 #aaa></app-step1>
         
         <div class="stepper-buttons"> 
-            <button mat-raised-button color="primary" MatStepperNext>Continue to step 2</button>
+            <button mat-raised-button color="primary" matStepperNext>Continue to step 2</button>
         </div>
-
+    </mat-step>
+  
+    
+    <mat-step>
+        <ng-template matStepLabel>course pricing details</ng-template>
+        
+        <app-step2></app-step2>
+        <div class="stepper-buttons"> 
+            <button mat-raised-button color="primary" matStepperPrevious>back to step 1</button>
+            <button mat-raised-button color="primary" matStepperNext>Continue to step 3</button>
+        </div>
     </mat-step>
 
 <!-- 
-    <app-step2></app-step2>
     <app-step3></app-step3> -->
 
 </mat-stepper>
