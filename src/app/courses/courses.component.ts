@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./courses.component.css']
 })
 export class CoursesComponent implements OnInit {
-
+  aaa 
   constructor() { }
 
   ngOnInit(): void {
+    setInterval(()=>{
+      this.aaa = (Math.random() * 10).toString()
+    },500)
   }
 
 }

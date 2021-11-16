@@ -9,7 +9,9 @@ import { courseTitleValidator } from '../validators/course-title.validator';
   styleUrls: ['./step1.component.css']
 })
 export class Step1Component implements OnInit {
-  public a = "sssssssss"
+
+  categories$ = this.coursesService.findAllCourses()
+ 
  public form = this.fb.group({
     title: ['sss',{ 
       validators:[
