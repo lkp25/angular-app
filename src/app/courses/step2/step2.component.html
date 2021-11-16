@@ -12,9 +12,33 @@
   <br />
   <!-- PRICE -->
   <mat-form-field>
-      <input formControlName="price" type="number" value="" matInput placeholder="price">
-      <!-- input custom error if max is exceeded -->
-      <mat-error *ngIf="coursePrice.errors?.max">max is {{ coursePrice.errors.max.max  }}</mat-error>
+    <input
+      formControlName="price"
+      type="number"
+      value=""
+      matInput
+      placeholder="price"
+    />
+    <!-- input custom error if max is exceeded -->
+    <mat-error *ngIf="coursePrice.errors?.max"
+      >max is {{ coursePrice.errors.max.max }}</mat-error
+    >
+  </mat-form-field>
+<br>
+  <!-- range date selector -->
+  <mat-form-field>
+    <mat-label>Promo period</mat-label>
+    <!-- 2 inputs start and end: -->
+    <mat-date-range-input [rangePicker]="promoPicker">
+      <input formControlName="promoStartAt" placeholder="start date" matStartDate />
+      <input formControlName="promoEndAt" placeholder="end date" matEndDate />
+    </mat-date-range-input>
+    <mat-error *ngIf="form.errors?.promoPeriodError && form.dirty">Start date must be before end date!</mat-error>
+    <mat-datepicker-toggle
+    [for]="promoPicker"
+    matSuffix
+    ></mat-datepicker-toggle>
+    <mat-date-range-picker #promoPicker></mat-date-range-picker>
   </mat-form-field>
 
   <!-- debug -->

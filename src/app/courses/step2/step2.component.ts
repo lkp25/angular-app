@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { createPromoRangeValidator } from '../validators/date-range.validator';
 
 @Component({
   selector: 'app-step2',
@@ -20,6 +21,12 @@ export class Step2Component implements OnInit {
         Validators.pattern('[0-9]+')
       ]
     ],
+    promoStartAt: [null],
+    promoEndAt: [null]
+  }, 
+  //entire form options
+  {
+    validators: [createPromoRangeValidator()]
   });
 
   ngOnInit(): void {
@@ -34,6 +41,10 @@ export class Step2Component implements OnInit {
         //new value change and an infinite loop. to prevent it set this flag to false
         //so no event is emitted
         priceField.disable({emitEvent:false})
+      }
+      else if (value.courseType == 'premium' && priceField.disabled){
+        priceField.enable({emitEvent:false})
+
       }
     })
 
