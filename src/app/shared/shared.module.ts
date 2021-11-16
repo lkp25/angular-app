@@ -5,6 +5,7 @@ import { LoadingSpinnerComponent } from "./loading-spinner/loading-spinner/loadi
 import { ErrorMsgComponent } from './error-msg/error-msg.component';
 import { ValidDirective } from "./valid.directive";
 import { MaterialModule } from "../material/material.module";
+import { ScrollingModule } from "@angular/cdk/scrolling";
 
 @NgModule({
     declarations:[
@@ -13,14 +14,15 @@ import { MaterialModule } from "../material/material.module";
         ErrorMsgComponent,
         ValidDirective
     ],
-    imports: [CommonModule, MaterialModule],
+    imports: [CommonModule, MaterialModule, ScrollingModule],
     exports: [
         LoadingSpinnerComponent,
         DropdownDirective,
         CommonModule,
         ValidDirective,
         ErrorMsgComponent,
-        MaterialModule
+        MaterialModule,
+        ScrollingModule
     ]
 })
 export class SharedModule{}
