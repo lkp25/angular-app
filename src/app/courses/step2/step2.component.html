@@ -1,1 +1,22 @@
-<p>step2 works!</p>
+<div [formGroup]="form">
+  <!-- TYPE OF COURSE -->
+  <label
+    >Course Type:
+    <br />
+    <mat-radio-group formControlName="courseType">
+      <mat-radio-button value="free">Free </mat-radio-button>
+      <br />
+      <mat-radio-button value="premium">Premium </mat-radio-button>
+    </mat-radio-group>
+  </label>
+  <br />
+  <!-- PRICE -->
+  <mat-form-field>
+      <input formControlName="price" type="number" value="" matInput placeholder="price">
+      <!-- input custom error if max is exceeded -->
+      <mat-error *ngIf="coursePrice.errors?.max">max is {{ coursePrice.errors.max.max  }}</mat-error>
+  </mat-form-field>
+
+  <!-- debug -->
+  <div>{{ form.value | json }}</div>
+</div>

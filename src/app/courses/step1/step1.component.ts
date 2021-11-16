@@ -21,11 +21,12 @@ export class Step1Component implements OnInit {
       ],
       //a function that returns a function
       asyncValidators:[courseTitleValidator(this.coursesService)],
-      updateOn: "blur"
+      updateOn: "blur",      
   }],
     releasedAt: [new Date(), Validators.required],
     downloadsAllowed: [false, Validators.requiredTrue],
-    longDescription: ['', [Validators.required, Validators.minLength(3)]]
+    longDescription: ['', [Validators.required, Validators.minLength(3)]],
+    category: ['', [Validators.required]]
 
   })
 

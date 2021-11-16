@@ -27,13 +27,18 @@
 
         </textarea>
     </mat-form-field>
-
+<br>
     <!-- SELECT -->
-    <mat-select placeholder="select category">
-        <ng-container *ngFor="let category of (categories$ | async)">
-            <mat-option [value]="category.title">{{ category.title }}</mat-option>
-        </ng-container>
-    </mat-select>
+    <mat-form-field style="width: 100%">
+        <mat-select placeholder="select category" formControlName="category">
+            <mat-option value=""> == None ==</mat-option>
+
+            <ng-container *ngFor="let category of (categories$ | async)">
+                <mat-option [value]="category.title">{{ category.title }}</mat-option>
+            </ng-container>
+        </mat-select>
+    </mat-form-field>
+    
 
 
     <!-- DEBUG -->

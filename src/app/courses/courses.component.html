@@ -1,12 +1,12 @@
 <h1>create new course</h1>
 
 <!-- linear true? only pass to next step after first is valid -->
-<mat-stepper [linear]="true" orientation="horizontal" class="mat-elevation-z5" labelPosition="bottom">
+<mat-stepper [linear]="false" orientation="horizontal" class="mat-elevation-z5" labelPosition="bottom">
    <!-- we need to get to the form placed in app-step-1 and check if it is valid
 can do this by placing local reference on app-step-1 and accessing it's form
 property in [stepControl]
 -->
-    <mat-step [stepControl]="aaa.form">
+    <mat-step [stepControl]="aaa.form" errorMessage="details are not correct">
         <ng-template matStepLabel>course landing page details</ng-template>
         
         <app-step1 #aaa></app-step1>
@@ -17,7 +17,7 @@ property in [stepControl]
     </mat-step>
   
     
-    <mat-step>
+    <mat-step errorMessage="details are not correct">
         <ng-template matStepLabel>course pricing details</ng-template>
         
         <app-step2></app-step2>
@@ -31,3 +31,4 @@ property in [stepControl]
     <app-step3></app-step3> -->
 
 </mat-stepper>
+ 
