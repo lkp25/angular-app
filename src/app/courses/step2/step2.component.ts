@@ -22,12 +22,13 @@ export class Step2Component implements OnInit {
       ]
     ],
     promoStartAt: [null],
-    promoEndAt: [null]
+    promoEndAt: [null],
+    thumbnail: [null]
   }, 
   //entire form options
   {
     validators: [createPromoRangeValidator()],
-    updateOn: "blur"
+    // updateOn: "blur" --no to be set for file uploads couse no blur is possible!
   });
 
   ngOnInit(): void {

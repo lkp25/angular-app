@@ -1,6 +1,11 @@
 <div [formGroup]="form">
+
   <!-- file upload field -->
-  <app-file-upload requiredFileType="image/png"></app-file-upload>
+  <app-file-upload   
+  requiredFileType="image/png" 
+  formControlName="thumbnail">
+  </app-file-upload>
+
   <!-- TYPE OF COURSE -->
   <label
     >Course Type:
@@ -44,5 +49,8 @@
   </mat-form-field>
 
   <!-- debug -->
-  <div>{{ form.value | json }}</div>
+  <p>CURRENT FORM VALUES</p>
+  <div> {{ form.value | json }}</div>
+  <p>FORM VALID?</p>
+  <div> {{ form.valid }}</div>
 </div>
