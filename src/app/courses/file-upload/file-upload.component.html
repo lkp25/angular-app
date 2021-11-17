@@ -12,3 +12,5 @@
         <mat-icon>attach_file</mat-icon>
     </button>
 </div>
+<!-- PROGRESS BAR - determinate(exact %of progress known) or indetermiate -->
+<mat-progress-bar *ngIf="uploadProgress" [value]="uploadProgress" mode="determinate" class="progress-bar"></mat-progress-bar>

@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-file-upload',
@@ -14,6 +14,7 @@ export class FileUploadComponent implements OnInit {
   fileName = ""
   fileUploadError = false
   acceptedFileTypes=['.png','.jpg','.jpeg']
+  uploadProgress: number
 
   constructor(private http: HttpClient) { }
 
@@ -31,16 +32,32 @@ export class FileUploadComponent implements OnInit {
       this.fileUploadError = false
 
       this.http.post('http://localhost:8080/files/upload-image', 
-      formData
+      formData, {
+        //FOR GETTING THE % of file upload progress!
+        reportProgress: true,
+        //will now receive some http events not just response/body object
+        observe: "events"
+      }
       ).pipe(
         //handle error first if any
         catchError(error =>{
           this.fileUploadError = true
           //emit new observable containing error object and complete the stream
           return of(error)
+        }),
+        finalize(()=>{
+          //when stream completes or errors out, 
+          // set uploadProgress to null to hide progress bar
+          this.uploadProgress = null
         })
       )
-      .subscribe()
+      .subscribe(event => {
+        console.log(event);
+        if(event.type == HttpEventType.UploadProgress){
+          //loaded - how much now loaded, total - total to load
+          this.uploadProgress = Math.round(100 * (event.loaded / event.total))
+        }
+      })
     }
     
   }
