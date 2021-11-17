@@ -1,5 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 import { CoursesService } from '../courses.service';
 import { courseTitleValidator } from '../validators/course-title.validator';
 
@@ -36,7 +37,24 @@ export class Step1Component implements OnInit {
     private coursesService: CoursesService
   ) { }
 
+  //save draft to local storage on changes and load on init if any exists
   ngOnInit(): void {
+    const draft = localStorage.getItem("STEP_1")
+    if(draft){
+      this.form.setValue(JSON.parse(draft))
+    }
+    
+    this.form.valueChanges.pipe(
+      //only let the value pass if form is valid, die otherwise
+      filter(()=> this.form.valid),
+      //wait for some time before saving      
+      debounceTime(1500)
+      
+    ).subscribe(value =>{
+      console.log(value);
+      localStorage.setItem("STEP_1", JSON.stringify(value))
+      
+    })
   }
 
   get courseTitle(){

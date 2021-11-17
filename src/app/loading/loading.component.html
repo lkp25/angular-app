@@ -1,0 +1,5 @@
+<!-- subscribe to loading$ emitting true/false based on nav state -->
+<div class="spinner-container" *ngIf="loadingService.loading$ | async">
+    <app-loading-spinner></app-loading-spinner>
+    
+</div>

@@ -14,12 +14,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ValidDirective } from './shared/valid.directive';
+import { LoadingComponent } from './loading/loading.component';
 
 
 @NgModule({
   declarations: [    
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoadingComponent
     
 
   ],

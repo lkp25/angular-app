@@ -26,7 +26,8 @@ export class Step2Component implements OnInit {
   }, 
   //entire form options
   {
-    validators: [createPromoRangeValidator()]
+    validators: [createPromoRangeValidator()],
+    updateOn: "blur"
   });
 
   ngOnInit(): void {
