@@ -8,6 +8,7 @@ import { MaterialModule } from "../material/material.module";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { AddressFormComponent } from "../courses/address-component/address.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { HoldableDirective } from './holdable.directive';
 
 @NgModule({
     declarations:[
@@ -15,7 +16,8 @@ import { ReactiveFormsModule } from "@angular/forms";
         LoadingSpinnerComponent,
         DropdownDirective,
         ErrorMsgComponent,
-        ValidDirective
+        ValidDirective,
+        HoldableDirective
     ],
     imports: [CommonModule, MaterialModule, ScrollingModule, ReactiveFormsModule],
     exports: [
