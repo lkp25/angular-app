@@ -27,7 +27,8 @@ export class Step1Component implements OnInit {
     releasedAt: [new Date(), Validators.required],
     downloadsAllowed: [false, Validators.requiredTrue],
     longDescription: ['', [Validators.required, Validators.minLength(3)]],
-    category: ['', [Validators.required]]
+    category: ['', [Validators.required]],
+    address: [null, [Validators.required]]
 
   })
 

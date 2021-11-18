@@ -5,6 +5,7 @@ import {
   FormBuilder, FormGroup,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
+  ValidationErrors,
   Validator,
   Validators
 } from '@angular/forms';
@@ -13,20 +14,48 @@ import {noop, Subscription} from 'rxjs';
 @Component({
   selector: 'app-address-form',
   templateUrl: './address-component.html',
-  styleUrls: ['./address-form.component.scss'],
+  styleUrls: ['./address-component.scss'],
   providers: [
       {
           provide: NG_VALUE_ACCESSOR,
           multi:true,
           useExisting: AddressFormComponent
+      },
+      {
+        provide: NG_VALIDATORS,
+        multi: true,
+        useExisting: AddressFormComponent
       }
   ]
 })
-export class AddressFormComponent implements ControlValueAccessor, OnDestroy {
+export class AddressFormComponent implements Validator, ControlValueAccessor, OnDestroy {
 
+    //VALIDATOR METHODs:
+  onValidatorChange = () => {}
+
+  validate(control: AbstractControl):ValidationErrors | null {
+      
+    let errors
+      for(let key in control.value){
+          if(!control.value[key]){
+            errors = {addressFormValid: false}
+            return errors
+          }
+          
+          
+      }
+      
+        
+    return null
+  }
+  //notifies parent form that change occured to the value so it can be validated again
+  registerOnValidatorChange(onValidatorChange: ()=> void): void{
+    this.onValidatorChange = onValidatorChange
+  }
     @Input()
     legend:string;
 
+    //paired with blur event on form fields in template
     onTouched = () => {};
 
     onChangeSub: Subscription;
@@ -42,6 +71,8 @@ export class AddressFormComponent implements ControlValueAccessor, OnDestroy {
 
     }
 
+    //on change is a function that takes one argument, 
+    // subscribe gives one argument - value - so it can be passed in shorthand:
     registerOnChange(onChange: any) {
         this.onChangeSub = this.form.valueChanges.subscribe(onChange);
     }

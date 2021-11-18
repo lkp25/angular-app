@@ -1,4 +1,8 @@
 <div [formGroup]="form">
+    <app-address-form          formControlName="address"
+     legend="Address" ></app-address-form>
+    
+    
     <mat-form-field>
         <input #title matInput 
         formControlName="title"
@@ -48,5 +52,8 @@
     <!-- DEBUG -->
     <div class="form-value">
         {{form.value | json}}
+    </div>
+    <div class="form-value">
+        {{form.valid}}
     </div>
 </div>

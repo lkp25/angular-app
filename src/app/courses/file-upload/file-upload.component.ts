@@ -39,7 +39,7 @@ export class FileUploadComponent implements Validator, ControlValueAccessor, OnI
   constructor(private http: HttpClient) { }
 
   //CONTROLVALUEACCESSOR MEHTODS:
-  //callbacks reporting to farent form changes and touches
+  //callbacks reporting to parent form changes and touches
   onChange = (fileName)=> {}
   onTouched = ()=> {}
 
