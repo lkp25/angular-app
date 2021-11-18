@@ -6,15 +6,18 @@ import { ErrorMsgComponent } from './error-msg/error-msg.component';
 import { ValidDirective } from "./valid.directive";
 import { MaterialModule } from "../material/material.module";
 import { ScrollingModule } from "@angular/cdk/scrolling";
+import { AddressFormComponent } from "../courses/address-component/address.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     declarations:[
+        AddressFormComponent,
         LoadingSpinnerComponent,
         DropdownDirective,
         ErrorMsgComponent,
         ValidDirective
     ],
-    imports: [CommonModule, MaterialModule, ScrollingModule],
+    imports: [CommonModule, MaterialModule, ScrollingModule, ReactiveFormsModule],
     exports: [
         LoadingSpinnerComponent,
         DropdownDirective,
@@ -22,7 +25,8 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
         ValidDirective,
         ErrorMsgComponent,
         MaterialModule,
-        ScrollingModule
+        ScrollingModule,
+        AddressFormComponent
     ]
 })
 export class SharedModule{}

@@ -11,6 +11,7 @@ export class CryptoService {
   ) { }
 
   
+  //only one call to the backend for all the data:
   getAllCrypto(){
     
     return this.http.get<any>('http://localhost:8080/crypto/all')

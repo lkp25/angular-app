@@ -26,6 +26,22 @@
     </div>
 
   </section>
+  
+  <section id="flux_section">
+      <div hidden>
+          <p>current FLUX price is:</p>
+          <span *ngIf="cryptoPrices">
+              {{cryptoPrices.flux | currency:'USD'}}
+          </span>
+          <span *ngIf="!cryptoPrices">loading...</span>
+      </div>
+      <div>
+        <!-- CHART LOGIC -->
+        <canvas #fluxChart></canvas>
+        <!-- <button (click)="doChart()">make a chart!</button> -->
+    </div>
+
+  </section>
 
  
 

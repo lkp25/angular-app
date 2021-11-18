@@ -35,6 +35,14 @@ export class CryptoComponent implements OnInit, OnDestroy {
     time: [],
   };
 
+  @ViewChild('fluxChart', { static: true }) fluxChartRef: ElementRef;
+  fluxChart;
+  fluxChartLive;
+  fluxPriceData = {
+    price: [],
+    time: [],
+  };
+
 
   @ViewChild('bitcoinChart', { static: true }) bitcoinChartRef: ElementRef;
   bitcoinChart;
@@ -49,9 +57,11 @@ export class CryptoComponent implements OnInit, OnDestroy {
 
     //initial load
     this.getAllCryptoPrices();
+    
     //load chart/s
     this.showKDAChart();
     this.showBTCChart();
+    this.showFLUXChart()
 
     //interval load
     this.cryptoInterval = setInterval(() => {
@@ -100,14 +110,19 @@ export class CryptoComponent implements OnInit, OnDestroy {
           this.btcPriceData,
           'btc'
         );
+        //update for flux:
+        this.updateCurrentTickValueForCrypto(
+          data,
+          this.fluxChartLive,
+          this.fluxPriceData,
+          'flux'
+        );
       },
       (error) => console.log(error)
     );
   }
 
   showKDAChart() {
-    
-
     this.kadenaChart = this.kadenaChartRef.nativeElement.getContext('2d');
    
     this.kadenaChartLive = new Chart(this.kadenaChart, {
@@ -149,7 +164,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
         labels: this.btcPriceData.time,
         datasets: [
           {
-            label: 'KDA price',
+            label: 'BTC price',
             data: this.btcPriceData.price,
 
             backgroundColor: 'red',
@@ -164,6 +179,40 @@ export class CryptoComponent implements OnInit, OnDestroy {
           title: {
             display: true,
             text: 'Bitcoin tick-price chart',
+            padding: {
+              top: 10,
+              bottom: 30,
+            },
+          },
+        },
+      },
+    });
+  }
+
+  showFLUXChart() {
+    this.fluxChart = this.fluxChartRef.nativeElement.getContext('2d');
+
+    this.fluxChartLive = new Chart(this.fluxChart, {
+      type: 'line', //horizontalBar, doughnut, line pie radar polar area
+      data: {
+        labels: this.fluxPriceData.time,
+        datasets: [
+          {
+            label: 'FLUX price',
+            data: this.fluxPriceData.price,
+
+            backgroundColor: 'purple',
+            borderColor: 'purple',
+            hoverBorderWidth: 3,
+            hoverBorderColor: 'green',
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'FLUX tick-price chart',
             padding: {
               top: 10,
               bottom: 30,
