@@ -32,14 +32,14 @@ export class DogcovidFormValidators{
             return null
     }
 
-    static czyMaJajaGender(control: FormGroup){
+    static czyMaKokardeGender(control: FormGroup){
         const dogForm = control
         const gender = control.get('gender')
-        const jaja = control.get('jaja')
+        const kokarda = control.get('kokarda')
 
-        if(jaja.value === 'tak' && gender.value === "suka"){
-            console.log("Dfsfdsfd");
-            return {jajaError: "suka z jajami nie moze byc"}
+        if(kokarda.value === 'tak' && gender.value === "pjes"){
+            
+            return {kokardaError: "pies z kokarda?  nie moze byc!"}
         }
 
         return null

@@ -46,34 +46,34 @@
   [msg]="dogForm.errors['nameTooLong']">
   </app-error-msg>
   <p>
-    czy ma jaja?
+    czy ma kokardę?
     <br />
 
-    <label for="jajanie"
+    <label for="kokardanie"
       >nie
       <input
         type="radio"
         value="nie"
-        name="jaja"
-        id="jajanie"
-        formControlName="jaja"
+        name="kokarda"
+        id="kokardanie"
+        formControlName="kokarda"
       />
     </label>
     <br />
-    <label for="jajatak"
+    <label for="kokardatak"
       >tak
       <input
         type="radio"
         value="tak"
-        name="jaja"
-        id="jajatak"
-        formControlName="jaja"
+        name="kokarda"
+        id="kokardatak"
+        formControlName="kokarda"
       />
     </label>
   </p>
   <app-error-msg 
-  *ngIf="dogForm.errors?.jajaError" 
-  [msg]="dogForm.errors['jajaError']">
+  *ngIf="dogForm.errors?.kokardaError" 
+  [msg]="dogForm.errors['kokardaError']">
   </app-error-msg>
   <br />
 

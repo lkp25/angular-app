@@ -28,7 +28,8 @@ import { HoldableDirective } from './holdable.directive';
         ErrorMsgComponent,
         MaterialModule,
         ScrollingModule,
-        AddressFormComponent
+        AddressFormComponent,
+        HoldableDirective
     ]
 })
 export class SharedModule{}

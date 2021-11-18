@@ -17,7 +17,7 @@ export class RxjsComponent implements OnInit, AfterViewInit {
   filteredTodosSmall: Observable<any[] | Object>
   obs1$: Observable<number>
   
-  genders = ['male', 'female', 'wtf']
+  genders = ['male', 'female', 'other']
 
   mainForm: FormGroup
   constructor(private rxjsFormService: RxjsFormService) { }
