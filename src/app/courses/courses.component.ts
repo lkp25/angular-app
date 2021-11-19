@@ -20,4 +20,11 @@ export class CoursesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  submit(step1, step2, step3){
+    console.log(step1);
+    console.log(step2);
+    console.log(step3);
+    
+
+  }
 }

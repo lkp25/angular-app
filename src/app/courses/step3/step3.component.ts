@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-step3',
@@ -17,4 +17,20 @@ export class Step3Component implements OnInit {
   ngOnInit(): void {
   }
 
+  //convenient getter for form array
+  get lessons(){
+    return this.form.controls['lessons'] as FormArray
+  }
+  addLesson(){
+    const lessonForm = this.fb.group({
+      title: ['', Validators.required],
+      level: ['beginner', Validators.required],
+    })
+
+    this.lessons.push(lessonForm)
+  }
+
+  deleteLesson(i){
+    this.lessons.removeAt(i)
+  }
 }
