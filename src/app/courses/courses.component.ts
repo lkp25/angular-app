@@ -15,9 +15,49 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoursesComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    console.log(this.arr);
+    const newArr = []
+    while(this.arr.length > 0){
+      if(this.arr[1] - this.arr[0] === 1 && this.arr[2] - this.arr[1] === 1){
+        this.arr.splice(1, 1)  
+        newArr.push(this.arr.shift() + '-')
+      } 
+      else if(this.arr[1] - this.arr[0] === 1){
+        newArr.push(this.arr.shift() + '-')
+        newArr.push('-', this.arr.shift())
+        
+      }
+      
+      
 
+      
+      
+      else {
+        newArr.push(this.arr.shift()) 
+      } 
+    }
+    console.log(newArr);
+    console.log(this.arr);
+    const h = newArr.map((a)=>{
+      if(typeof a === 'number'){
+        return 'A' + a + 'B'
+      }
+      return a
+    })
+    console.log(h);
+    
+    const stri = h.join().replace(/\-[\,\-\d]+A/gm,'-').replace(/[AB]/gm,'')
+  
+    
+    console.log(stri.split(','));
+    
+    
+  }
+
+  arr = [1,2,3,4,6,8,9,10,15]
   ngOnInit(): void {
+    
   }
 
   submit(step1, step2, step3){
