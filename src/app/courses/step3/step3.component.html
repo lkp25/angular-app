@@ -1,1 +1,24 @@
 <p>step3 works!</p>
+
+<div class="add-lessons-form" [formGroup]="form">
+    
+    <div class="lesson-form-row">
+        <mat-form-field appearance="fill">
+            <input matInput placeholder="lesson title">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+           <mat-select placeholder="lesson level">
+               <mat-option value="beginner">beginner</mat-option>
+               <mat-option value="intermediate">intermediate</mat-option>
+               <mat-option value="advanced">advanced</mat-option>
+           </mat-select>
+        </mat-form-field>
+        <mat-icon class="delete-btn">delete_forever</mat-icon>
+    </div>
+    
+    <button mat-mini-fab>
+        <mat-icon class="add-course-button">add</mat-icon>
+    </button>
+</div>
+
+<div> {{ form.value | json}}</div>

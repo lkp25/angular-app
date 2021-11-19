@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-step3',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Step3Component implements OnInit {
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
+
+  form = this.fb.group({
+    lessons: this.fb.array([])
+  })
 
   ngOnInit(): void {
   }
