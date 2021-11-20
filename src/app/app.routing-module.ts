@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { CanLoadAuthGuard } from "./canLoad.guard";
 import { CoursesComponent } from "./courses/courses.component";
 import { CryptoComponent } from "./crypto/crypto.component";
 import { DogcovidComponent } from "./dogcovid/dogcovid.component";
@@ -36,7 +37,8 @@ const appRoutes: Routes = [
         path: 'rxjs', 
         loadChildren: ()=> import('./rxjs/rxjs.module')
         .then(module => module.RxjsModule),
-        component: RxjsComponent
+        component: RxjsComponent,
+        canLoad: [CanLoadAuthGuard]
     },
     {
         path: 'dogcovid', 
@@ -56,7 +58,10 @@ const appRoutes: Routes = [
     imports: [
         RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules, initialNavigation: 'enabled' })
     ],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [
+        CanLoadAuthGuard
+    ]
 })
 export class AppRoutingModule{
 

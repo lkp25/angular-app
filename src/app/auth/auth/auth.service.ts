@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject, throwError } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { User } from './user.model';
@@ -20,6 +20,11 @@ export class AuthService {
   user = new BehaviorSubject<User>(null)
   logoutTimer = new Subject<number>()
   private tokenExpirationTimer: any
+
+  //emit a boolean flag
+  isLoggedIn$ = this.user.asObservable().pipe(
+    map(user => !! user)
+  )
 
   constructor(
       private http: HttpClient,
