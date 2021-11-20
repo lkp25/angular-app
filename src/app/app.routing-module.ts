@@ -19,18 +19,21 @@ const appRoutes: Routes = [
     {
         path: 'auth', 
         loadChildren: ()=> import('./auth/auth/auth.module')
-        .then(module => module.AuthModule)
+        .then(module => module.AuthModule),
+        data: {animation: "auth"},
     },
 
     {
         path: 'shopping-list', 
         loadChildren: ()=> import('./shopping-list/shopping-list.module')
-        .then(module => module.ShoppingListModule)
+        .then(module => module.ShoppingListModule),
+        data: {animation: "sh"}
     },
     {
         path: 'crypto', 
         loadChildren: ()=> import('./crypto/crypto.module')
         .then(module => module.CryptoModule),
+        data: {animation: "crypto"},
         component: CryptoComponent
     },
     {
@@ -38,18 +41,22 @@ const appRoutes: Routes = [
         loadChildren: ()=> import('./rxjs/rxjs.module')
         .then(module => module.RxjsModule),
         component: RxjsComponent,
+        data: {animation: "rxjs"},
+        
         canLoad: [CanLoadAuthGuard]
     },
     {
         path: 'dogcovid', 
         loadChildren: ()=> import('./dogcovid/dogcovid.module')
         .then(module => module.DogcovidModule),
+        data: {animation: "dogcovid"},
         component: DogcovidComponent
     },
     {
         path: 'courses', 
         loadChildren: ()=> import('./courses/courses.module')
         .then(module => module.CoursesModule),
+        data: {animation: "courses"},
         component: CoursesComponent
     }
 ]

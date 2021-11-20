@@ -2,11 +2,16 @@ import { Component, HostListener, Inject, OnInit, PLATFORM_ID } from '@angular/c
 import { isPlatformBrowser } from '@angular/common';
 import { take } from 'rxjs/operators';
 import { AuthService } from './auth/auth/auth.service';
+import { RouterOutlet } from '@angular/router';
+import { fader , slideInAnimation } from './app.animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations:[
+    slideInAnimation
+  ]
 })
 export class AppComponent implements OnInit{
   title = 'myapp';
@@ -26,7 +31,9 @@ export class AppComponent implements OnInit{
     });
     
   }
-  
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet?.activatedRouteData?.['animation'];
+  }
 
   ngOnInit(){
     if(isPlatformBrowser(this.platformId)){
