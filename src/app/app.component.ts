@@ -3,14 +3,14 @@ import { isPlatformBrowser } from '@angular/common';
 import { take } from 'rxjs/operators';
 import { AuthService } from './auth/auth/auth.service';
 import { RouterOutlet } from '@angular/router';
-import { fader , slideInAnimation } from './app.animations';
+import { stepper,fader , slideInAnimation } from './app.animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
   animations:[
-    slideInAnimation
+    stepper
   ]
 })
 export class AppComponent implements OnInit{

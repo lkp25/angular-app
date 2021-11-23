@@ -13,7 +13,10 @@ const appRoutes: Routes = [
     {
         path: 'recipies', 
         loadChildren: ()=> import('./recipies/recipies.module')
-        .then(module => module.RecipiesModule)
+        .then(module => module.RecipiesModule),
+        data: {
+            preload: true
+        }
     },
     
     {
