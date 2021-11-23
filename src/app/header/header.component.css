@@ -2,5 +2,9 @@ li{
     color:red;
 }
 .abc{
-    background-color: rgba(196, 116, 116, 0.575);
+    background-color: rgba(9, 131, 231, 0.575)!important;
+}
+.nav-el{
+     background-color: rgba(153, 158, 206, 0.575); 
+
 }

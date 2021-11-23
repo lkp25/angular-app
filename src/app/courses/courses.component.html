@@ -1,4 +1,6 @@
-<h1 *ngIf="couponCode"> {{couponCode}} is great to have ain't it?</h1>
+<h1 *ngIf="couponCode"> your coupon code is:  <strong>{{couponCode}}</strong> 
+    
+</h1>
 <button (click)="obtainCouponCode()" mat-elevated-button>Obtain coupon code!</button>
 <!-- linear true? only pass to next step after first is valid -->
 <mat-stepper [linear]="false" orientation="horizontal" class="mat-elevation-z5" labelPosition="bottom">

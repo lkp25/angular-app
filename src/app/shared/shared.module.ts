@@ -9,9 +9,11 @@ import { ScrollingModule } from "@angular/cdk/scrolling";
 import { AddressFormComponent } from "../courses/address-component/address.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HoldableDirective } from './holdable.directive';
+import { ChatComponent } from "../chat/chat.component";
 
 @NgModule({
     declarations:[
+        ChatComponent,
         AddressFormComponent,
         LoadingSpinnerComponent,
         DropdownDirective,
@@ -21,6 +23,7 @@ import { HoldableDirective } from './holdable.directive';
     ],
     imports: [CommonModule, MaterialModule, ScrollingModule, ReactiveFormsModule],
     exports: [
+        ChatComponent,
         LoadingSpinnerComponent,
         DropdownDirective,
         CommonModule,

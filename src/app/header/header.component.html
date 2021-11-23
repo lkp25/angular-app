@@ -5,13 +5,14 @@
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li *ngIf="isAuthenticated"><a routerLinkActive="abc" routerLink="/recipies">Recipies</a></li>
-                <li><a routerLinkActive="abc" routerLink="/shopping-list">Shopping list</a></li>
-                <li><a routerLinkActive="abc" routerLink="/crypto">Crypto</a></li>
-                <li><a routerLinkActive="abc" routerLink="/rxjs">RXJS</a></li>
-                <li><a routerLinkActive="abc" routerLink="/dogcovid">DogCoVID</a></li>
-                <li><a routerLinkActive="abc" routerLink="/courses">Courses</a></li>
-                <li *ngIf="!isAuthenticated"><a routerLinkActive="abc" routerLink="/auth">login</a></li>
+                <li *ngIf="isAuthenticated"><a class="nav-el" routerLinkActive="abc" routerLink="/recipies">Recipies</a></li>
+                <li><a routerLinkActive="abc" class="nav-el" routerLink="/shopping-list">Shopping list</a></li>
+                <li><a routerLinkActive="abc" class="nav-el" routerLink="/crypto">Crypto</a></li>
+                <li><a routerLinkActive="abc" class="nav-el" routerLink="/rxjs">RXJS</a></li>
+                <li><a routerLinkActive="abc" class="nav-el" routerLink="/dogcovid">DogCoVID</a></li>
+                <li><a routerLinkActive="abc" class="nav-el" routerLink="/courses">Courses</a></li>
+                <li *ngIf="!isAuthenticated"><a class="nav-el" routerLinkActive="abc" routerLink="/auth">login</a></li>
+                <li><a mat-button [routerLink]="[{outlets:{chat:['helpdesk-chat']}}]"><mat-icon>help</mat-icon></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li *ngIf="isAuthenticated" class="dropdown" app-dropdown>

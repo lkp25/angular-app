@@ -1,8 +1,10 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 import { CanLoadAuthGuard } from "./canLoad.guard";
+import { ChatComponent } from "./chat/chat.component";
 import { CoursesComponent } from "./courses/courses.component";
 import { CryptoComponent } from "./crypto/crypto.component";
+import { CustomPreloadingStrategy } from "./custom-preloading-strategy";
 import { DogcovidComponent } from "./dogcovid/dogcovid.component";
 import { RxjsComponent } from "./rxjs/rxjs.component";
 
@@ -61,16 +63,21 @@ const appRoutes: Routes = [
         .then(module => module.CoursesModule),
         data: {animation: "courses"},
         component: CoursesComponent
+    },
+    {
+        path: 'helpdesk-chat',
+        component: ChatComponent,
+        outlet: 'chat'
     }
 ]
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules, initialNavigation: 'enabled' })
+        RouterModule.forRoot(appRoutes, { preloadingStrategy: CustomPreloadingStrategy, initialNavigation: 'enabled' })
     ],
     exports: [RouterModule],
     providers: [
-        CanLoadAuthGuard
+        CanLoadAuthGuard, CustomPreloadingStrategy
     ]
 })
 export class AppRoutingModule{

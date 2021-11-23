@@ -5,9 +5,13 @@
 <div class="container">
   <div class="row">
     
+    <!-- PRIMARY oUTLET -->
     <div class="col-md-12" [@routeAnimations]="prepareRoute(outlet)">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
   </div>
   
 </div>
+
+<!-- secondary oUTLET -->
+<router-outlet name="chat"></router-outlet>
