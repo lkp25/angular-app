@@ -4,6 +4,7 @@ import { take } from 'rxjs/operators';
 import { AuthService } from './auth/auth/auth.service';
 import { RouterOutlet } from '@angular/router';
 import { stepper,fader , slideInAnimation } from './app.animations';
+import { WebsocketService } from './shared/websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { stepper,fader , slideInAnimation } from './app.animations';
 export class AppComponent implements OnInit{
   title = 'myapp';
   constructor(
+    private websocketService: WebsocketService,
     private authService: AuthService,
     @Inject(PLATFORM_ID) private platformId 
     ) {}
@@ -37,8 +39,10 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     if(isPlatformBrowser(this.platformId)){
-
       this.authService.autoLogin()
     }
+
+    this.websocketService.listen('test-event')
+    .subscribe(data => console.log(data))
   }
 }
