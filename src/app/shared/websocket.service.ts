@@ -7,13 +7,13 @@ import {io} from 'socket.io-client'
 export class WebsocketService {
 
   readonly URI: string = 'http://localhost:3000'
-  socket: any
+  public socket: any
 
   constructor() { 
     this.socket = io(this.URI) 
   }
 
-  listen(eventName: string){
+  public listen(eventName: string){
     return new Observable(subscriber => {
       this.socket.on(eventName, (data)=>{
         subscriber.next(data)
@@ -21,7 +21,7 @@ export class WebsocketService {
     })
   }
 
-  emit(eventName: string, data: any){
+  public emit(eventName: string, data: any){
     this.socket.emit(eventName, data)
   }
 }

@@ -42,7 +42,16 @@ export class AppComponent implements OnInit{
       this.authService.autoLogin()
     }
 
+    //custom event emitted from server
     this.websocketService.listen('test-event')
     .subscribe(data => console.log(data))
+
+    //connection established, id acquired
+    this.websocketService.listen('connect')
+    .subscribe(data => console.log(this.websocketService.socket.id))
+
+    //client to server:
+    this.websocketService.emit('client-says', 'hello server!')
+    
   }
 }
