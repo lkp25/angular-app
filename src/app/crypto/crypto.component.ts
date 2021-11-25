@@ -21,6 +21,7 @@ import { CryptoService } from './crypto.service';
 export class CryptoComponent implements OnInit, OnDestroy {
   public cryptoPrices;
   private cryptoInterval;
+  private pricesSubscription
   constructor(
     private cryptoService: CryptoService,
     private datePipe: DatePipe
@@ -63,10 +64,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
     this.showBTCChart();
     this.showFLUXChart()
 
-    //interval load
-    this.cryptoInterval = setInterval(() => {
-      this.getAllCryptoPrices();
-    }, 10000);
+    
   }
 
 
@@ -92,7 +90,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
   }
 
   getAllCryptoPrices() {
-    this.cryptoService.getAllCrypto().subscribe(
+    this.pricesSubscription = this.cryptoService.getAllCrypto().subscribe(
       (data) => {
         this.cryptoPrices = data;
 
@@ -225,7 +223,7 @@ export class CryptoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     clearInterval(this.cryptoInterval);
-
+    this.pricesSubscription.unsubscribe()
     
   }
 }
