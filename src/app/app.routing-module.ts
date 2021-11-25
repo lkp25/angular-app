@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { PreloadAllModules, RouterModule, Routes, UrlSerializer, UrlTree } from "@angular/router";
 import { CanLoadAuthGuard } from "./canLoad.guard";
 import { ChatComponent } from "./chat/chat.component";
 import { CoursesComponent } from "./courses/courses.component";
@@ -73,7 +73,19 @@ const appRoutes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(appRoutes, { preloadingStrategy: CustomPreloadingStrategy, initialNavigation: 'enabled' })
+        RouterModule.forRoot(appRoutes, { 
+            preloadingStrategy: CustomPreloadingStrategy, 
+            initialNavigation: 'enabled',
+            // enableTracing: false,
+            // useHash: true,
+            scrollPositionRestoration: "enabled",
+            paramsInheritanceStrategy: "always",
+            relativeLinkResolution: "corrected",
+            malformedUriErrorHandler: 
+            (error: URIError, urlSerializer:UrlSerializer, url: string): UrlTree=> {
+                return urlSerializer.parse('/page-not-found')
+            }
+         })
     ],
     exports: [RouterModule],
     providers: [

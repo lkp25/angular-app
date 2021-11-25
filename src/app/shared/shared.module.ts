@@ -10,6 +10,7 @@ import { AddressFormComponent } from "../courses/address-component/address.compo
 import { ReactiveFormsModule } from "@angular/forms";
 import { HoldableDirective } from './holdable.directive';
 import { ChatComponent } from "../chat/chat.component";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
     declarations:[
@@ -21,7 +22,7 @@ import { ChatComponent } from "../chat/chat.component";
         ValidDirective,
         HoldableDirective
     ],
-    imports: [CommonModule, MaterialModule, ScrollingModule, ReactiveFormsModule],
+    imports: [RouterModule, CommonModule, MaterialModule, ScrollingModule, ReactiveFormsModule],
     exports: [
         ChatComponent,
         LoadingSpinnerComponent,
