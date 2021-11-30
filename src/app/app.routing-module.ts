@@ -48,7 +48,7 @@ const appRoutes: Routes = [
         component: RxjsComponent,
         data: {animation: "rxjs"},
         
-        canLoad: [CanLoadAuthGuard]
+        // canLoad: [CanLoadAuthGuard]
     },
     {
         path: 'dogcovid', 

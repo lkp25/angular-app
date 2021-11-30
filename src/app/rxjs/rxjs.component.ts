@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { from, fromEvent, interval, merge, noop, Observable, of, throwError, timer } from 'rxjs';
 import { catchError, concatMap, debounceTime, delayWhen, exhaustMap, filter, finalize, map, retryWhen, shareReplay, switchMap, throttle } from 'rxjs/operators';
 import { RxjsFormService } from './rsxj_form.service';
+import {WebsocketService} from '../shared/websocket.service'
 
 @Component({
   selector: 'app-rxjs',
@@ -11,16 +12,19 @@ import { RxjsFormService } from './rsxj_form.service';
   styleUrls: ['./rxjs.component.css']
 })
 export class RxjsComponent implements OnInit, AfterViewInit {
+  chatuser
+  
 @ViewChild('saveBtn') saveBtn: ElementRef
 
   filteredTodosHigh: Observable<any[] | Object>
   filteredTodosSmall: Observable<any[] | Object>
   obs1$: Observable<number>
-  
   genders = ['male', 'female', 'other']
 
   mainForm: FormGroup
-  constructor(private rxjsFormService: RxjsFormService) { }
+  constructor(private rxjsFormService: RxjsFormService,
+    private wss: WebsocketService
+    ) { }
 
   ngOnInit(): void {
    
@@ -132,7 +136,11 @@ savetoDB(changes){
     ) 
      
   }
+  enterChat(username){
+    this.chatuser = username
+    console.log(username);
+    this.wss.emit('newuserjoined', username)
+  }
 }
-
 
 

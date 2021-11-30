@@ -1,9 +1,17 @@
-<p>rxjs works!</p>
+<!-- <p>rxjs works!</p>
 <div *ngFor="let todo of filteredTodosHigh | async">
     <p>{{todo | json}}</p>
 </div>
 <div *ngFor="let todo of filteredTodosSmall | async">
     <p>{{todo | json}}</p>
+</div> -->
+
+<div class="chatbox">
+  <div *ngIf="!chatuser">
+
+    <button (click)="enterChat(username.value)">enter chat</button>
+    <input #username value="name" type="text">
+  </div>
 </div>
 
 <form [formGroup]="mainForm">
