@@ -3,3 +3,14 @@
     width: 400px;
     height: 300px;
 }
+
+.infomsg{
+    position: fixed;
+    top: 30%;
+    min-width: 100px;
+    min-height: 30px;
+    left: 50%;
+    background-color: red;
+    color: white;
+
+}

@@ -8,10 +8,15 @@
 
 <div class="chatbox">
   <div *ngIf="!chatuser">
-
     <button (click)="enterChat(username.value)">enter chat</button>
     <input #username value="name" type="text">
   </div>
+
+  <div *ngIf="errorMsg" class="infomsg">{{errorMsg}}</div>
+  <!-- <div *ngIf="chatuser">
+    <button (click)="enterChat(username.value)">send message</button>
+    <input #username value="name" type="text">
+  </div> -->
 </div>
 
 <form [formGroup]="mainForm">

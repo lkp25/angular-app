@@ -1,8 +1,8 @@
 
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { from, fromEvent, interval, merge, noop, Observable, of, throwError, timer } from 'rxjs';
-import { catchError, concatMap, debounceTime, delayWhen, exhaustMap, filter, finalize, map, retryWhen, shareReplay, switchMap, throttle } from 'rxjs/operators';
+import { from, fromEvent, interval, merge, noop, Observable, of, pipe, throwError, timer } from 'rxjs';
+import { catchError, concatMap, debounceTime, delayWhen, exhaustMap, filter, finalize, map, retryWhen, shareReplay, switchMap, take, throttle } from 'rxjs/operators';
 import { RxjsFormService } from './rsxj_form.service';
 import {WebsocketService} from '../shared/websocket.service'
 import { RSAService } from './RSA.service';
@@ -14,6 +14,7 @@ import { RSAService } from './RSA.service';
 })
 export class RxjsComponent implements OnInit, AfterViewInit {
   chatuser
+  errorMsg
   
 @ViewChild('saveBtn') saveBtn: ElementRef
 
@@ -139,11 +140,11 @@ savetoDB(changes){
      
   }
   enterChat(username){
-    this.chatuser = username
+    
     this.RSA.generateKey()
    
     
-    this.RSA.getPublicKey().subscribe( async (key) => {
+    this.RSA.getPublicKey().pipe(take(1)).subscribe( async (key) => {
       //after obtaining public key, send it to server with username
       if(key){
         console.log(key);
@@ -155,6 +156,20 @@ savetoDB(changes){
         console.log(entry);
         
         this.wss.emit('newuserjoined', entry)
+        //what is the server response?
+        this.wss.listen('newuserjoined').pipe(take(1)).subscribe((value: any) => {
+          if(value.error){
+            this.errorMsg = value.error
+            setTimeout(()=>{
+              this.errorMsg = null
+              
+            },3000)
+            console.log(value.error);            
+          }else {
+            console.log(value.message);
+            this.chatuser = username
+          }
+        })
          
 
       }

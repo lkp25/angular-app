@@ -56,6 +56,8 @@ export class AppComponent implements OnInit{
     //here this same message as above is emitted by server under 'received' event.
     
     this.websocketService.listen('received')
-    .subscribe(data => console.log(data))
+    .subscribe(data => {
+      // console.log(data)
+    })
   }
 }
