@@ -5,6 +5,7 @@ import { from, fromEvent, interval, merge, noop, Observable, of, throwError, tim
 import { catchError, concatMap, debounceTime, delayWhen, exhaustMap, filter, finalize, map, retryWhen, shareReplay, switchMap, throttle } from 'rxjs/operators';
 import { RxjsFormService } from './rsxj_form.service';
 import {WebsocketService} from '../shared/websocket.service'
+import { RSAService } from './RSA.service';
 
 @Component({
   selector: 'app-rxjs',
@@ -23,7 +24,8 @@ export class RxjsComponent implements OnInit, AfterViewInit {
 
   mainForm: FormGroup
   constructor(private rxjsFormService: RxjsFormService,
-    private wss: WebsocketService
+    private wss: WebsocketService,
+    private RSA: RSAService
     ) { }
 
   ngOnInit(): void {
@@ -138,8 +140,26 @@ savetoDB(changes){
   }
   enterChat(username){
     this.chatuser = username
-    console.log(username);
-    this.wss.emit('newuserjoined', username)
+    this.RSA.generateKey()
+   
+    
+    this.RSA.getPublicKey().subscribe( async (key) => {
+      //after obtaining public key, send it to server with username
+      if(key){
+        console.log(key);
+        const exportedKey = await window.crypto.subtle.exportKey('jwk', key)
+        const entry = {
+          username:username, 
+          key:  exportedKey
+        }
+        console.log(entry);
+        
+        this.wss.emit('newuserjoined', entry)
+         
+
+      }
+      
+    })
   }
 }
 

@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 
+import { BehaviorSubject, Observable } from "rxjs";
+
 @Injectable({providedIn: 'root'})
 export class RSAService{
     
@@ -8,14 +10,14 @@ export class RSAService{
         Store the calculated ciphertext here, so we can decrypt the message later.
         */
         ciphertext;
-        private publicKey1
-        private privatecKey1
+        private publicKey1 = new BehaviorSubject<CryptoKey>(null)
+        private privatecKey1 = new BehaviorSubject<CryptoKey>(null)
 
         public getPrivateKey(){
-            return this.privatecKey1
+            return this.privatecKey1.asObservable()
         }
         public getPublicKey(){
-            return this.publicKey1
+            return this.publicKey1.asObservable()
         }
         /*
         Fetch the contents of the "message" textbox, and encode it
@@ -86,11 +88,12 @@ export class RSAService{
                 true,
                 ["encrypt", "decrypt"]
               ).then((keyPair) => {
-                  this.publicKey1 = keyPair.publicKey
-                  this.privatecKey1 = keyPair.privateKey
+                  this.publicKey1.next(keyPair.publicKey)
+                  this.privatecKey1.next(keyPair.privateKey)
+                 
 
-                  this.decryptMessage(keyPair.privateKey);
-                  this.encryptMessage(keyPair.publicKey);
+                //   this.decryptMessage(keyPair.privateKey);
+                //   this.encryptMessage(keyPair.publicKey);
                  
                 });
             
