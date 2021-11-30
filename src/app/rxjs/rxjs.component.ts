@@ -18,7 +18,9 @@ export class RxjsComponent implements OnInit, AfterViewInit {
   activeTabs = []
   currentOpenedTab
   activeUsers = []
+  // activeUsers$ = of(this.activeUsers)
   currentConversationsArchive = {}
+  importedPublicKeys = {}
   
 @ViewChild('saveBtn') saveBtn: ElementRef
 
@@ -165,18 +167,22 @@ savetoDB(changes){
 
         //what is the server response?
         this.wss.listen('newuserjoined').pipe(take(1)).subscribe((value: any) => {
+          //error ocurred
           if(value.error){
             this.errorMsg = value.error
+            //display it and then remove
             setTimeout(()=>{
-              this.errorMsg = null
-              
+              this.errorMsg = null              
             },3000)
             console.log(value.error);            
           }else {
+            //new user joined successfully - save new details
             console.log(value.message);
             this.activeUsers = value.activeUsers
             console.log(this.activeUsers);
             this.chatuser = username
+            
+            
           }
         })
          
@@ -184,6 +190,8 @@ savetoDB(changes){
       }
       
     })
+    //unable receiving messages:
+    this.receiveMessages()
   }
 
   startNewConversation(user){
@@ -191,6 +199,25 @@ savetoDB(changes){
     if(this.activeTabs.find(name => name === user.username)){
       return
     }
+    //import PUBLIC KEY from portable object for current peer:
+    const indexOfCurrentPeer = this.activeUsers.findIndex((u)=>{
+      return u.username === user.username
+    })
+    const portablePublicKey = this.activeUsers[indexOfCurrentPeer].key
+    console.log(indexOfCurrentPeer);
+    const realPublicKey = window.crypto.subtle.importKey(
+      'jwk', 
+      portablePublicKey,  
+      {
+        name: "RSA-OAEP",
+        hash: 'SHA-256'
+      },
+      true,
+      ['encrypt']
+      ).then(realKey => 
+        this.importedPublicKeys[user.username] = realKey)
+      
+      
     //not opened? create new conversation:
     this.activeTabs.push(user.username)
     //if starting new conversation, make it active one
@@ -198,6 +225,7 @@ savetoDB(changes){
     
     //initilize the ARCHIVE for this conversation:
     this.currentConversationsArchive[user.username] = {messages: []}
+    
     
   }
 
@@ -209,8 +237,23 @@ savetoDB(changes){
     draftMessage.value = ""
   }
 
+  receiveMessages(){
+    this.wss.listen('send-message').subscribe(value => console.log(value)
+    )
+  }
+
   sendMessageTo(draftMessage, currentOpenedTab){
     //copy msg content and clear textarea
+    
+    const userIndex = this.activeUsers.findIndex(u=>{
+      return u.username === currentOpenedTab
+    })
+    console.log(userIndex);
+    
+    const roomID = this.activeUsers[userIndex].id
+    console.log(roomID);
+    
+    
     const message = draftMessage.value
     this.clearDraftMessage(draftMessage)
     //save msg in the main store under appropriate record:
@@ -218,6 +261,7 @@ savetoDB(changes){
     this.currentConversationsArchive[currentOpenedTab].messages.push({sender: 'me', msg:message})
     console.log(this.currentConversationsArchive);
     
+    this.wss.emit('send-message', {message, roomID})
   }
 }
 
