@@ -6,19 +6,39 @@
     <p>{{todo | json}}</p>
 </div> -->
 
-<div class="chatbox">
-  <div *ngIf="!chatuser">
-    <button (click)="enterChat(username.value)">enter chat</button>
-    <input #username value="name" type="text">
+<section class="chat-container">
+
+  <div class="chatbox">
+    <div *ngIf="errorMsg" class="infomsg">{{errorMsg}}</div>
+    <div class="enter-chat" *ngIf="!chatuser">
+      <button (click)="enterChat(username.value)">enter chat</button>
+      <input #username value="" placeholder="type your name here" type="text">
+    </div>
+
+
+    <article class="chat-tabs">
+      <button 
+      (click)="swichToConversationWith(tab)"
+      [class.active-tab]="currentOpenedTab === tab" 
+      *ngFor="let tab of activeTabs"
+      >{{tab}}</button>
+    </article>  
+    <!-- <div *ngIf="chatuser">
+      <button (click)="enterChat(username.value)">send message</button>
+      <input #username value="name" type="text">
+    </div> -->
   </div>
 
-  <div *ngIf="errorMsg" class="infomsg">{{errorMsg}}</div>
-  <!-- <div *ngIf="chatuser">
-    <button (click)="enterChat(username.value)">send message</button>
-    <input #username value="name" type="text">
-  </div> -->
-</div>
-
+  <div class="userlist">
+    <button  
+    *ngFor="let user of activeUsers"
+    (click)="startNewConversation(user)"
+    class="active-user" 
+    >{{user.username}}
+    </button>
+  </div>
+</section>
+<br><br><br>
 <form [formGroup]="mainForm">
     <div id="user-data">
       <div class="form-group">

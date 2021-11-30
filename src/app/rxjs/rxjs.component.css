@@ -1,7 +1,28 @@
+.chat-container{
+    display: grid;
+    grid-template-columns: 1fr auto;
+}
+
 .chatbox{
     border: 2px solid black;
     width: 400px;
     height: 300px;
+    overflow-y: scroll;
+    position: relative;
+}
+.chat-tabs{
+    height: 30px;
+    width: 100%;
+    background-color: rgba(128, 128, 128, 0.507);
+}
+.active-tab{
+    color: blue;
+    font-weight: bold;
+    background-color: wheat;
+}
+.enter-chat{
+    position: absolute;
+    bottom: 0;
 }
 
 .infomsg{
@@ -13,4 +34,17 @@
     background-color: red;
     color: white;
 
+}
+.userlist{
+    border: 2px solid violet;
+    height: 300px;
+    width: 100px;
+}
+.active-user{
+    background-color: teal;
+    color: white;
+    width: 100%;
+    
+    padding: 0.1rem;
+    cursor: pointer;
 }

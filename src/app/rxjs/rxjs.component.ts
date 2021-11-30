@@ -15,6 +15,10 @@ import { RSAService } from './RSA.service';
 export class RxjsComponent implements OnInit, AfterViewInit {
   chatuser
   errorMsg
+  activeTabs = []
+  currentOpenedTab
+  activeUsers = []
+  currentConversations = []
   
 @ViewChild('saveBtn') saveBtn: ElementRef
 
@@ -30,7 +34,11 @@ export class RxjsComponent implements OnInit, AfterViewInit {
     ) { }
 
   ngOnInit(): void {
-   
+    //generate new key every time this tab is activated
+    this.RSA.generateKey()
+
+
+
     this.mainForm = new FormGroup({
            'username': new FormControl('default', Validators.required),
            'email': new FormControl('null', Validators.required),
@@ -139,11 +147,9 @@ savetoDB(changes){
     ) 
      
   }
-  enterChat(username){
-    
-    this.RSA.generateKey()
-   
-    
+
+
+  enterChat(username){    
     this.RSA.getPublicKey().pipe(take(1)).subscribe( async (key) => {
       //after obtaining public key, send it to server with username
       if(key){
@@ -156,6 +162,7 @@ savetoDB(changes){
         console.log(entry);
         
         this.wss.emit('newuserjoined', entry)
+
         //what is the server response?
         this.wss.listen('newuserjoined').pipe(take(1)).subscribe((value: any) => {
           if(value.error){
@@ -167,6 +174,8 @@ savetoDB(changes){
             console.log(value.error);            
           }else {
             console.log(value.message);
+            this.activeUsers = value.activeUsers
+            console.log(this.activeUsers);
             this.chatuser = username
           }
         })
@@ -175,6 +184,21 @@ savetoDB(changes){
       }
       
     })
+  }
+
+  startNewConversation(user){
+    //ignore action if tab is already opened
+    if(this.activeTabs.find(name => name === user.username)){
+      return
+    }
+    //not opened? create new conversation:
+    this.activeTabs.push(user.username)
+    //if starting new conversation, make it active one
+    this.swichToConversationWith(user.username)
+    
+  }
+  swichToConversationWith(tab){
+    this.currentOpenedTab = tab
   }
 }
 
