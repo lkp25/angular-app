@@ -197,8 +197,17 @@ savetoDB(changes){
     this.swichToConversationWith(user.username)
     
   }
+
   swichToConversationWith(tab){
     this.currentOpenedTab = tab
+  }
+
+  clearDraftMessage(draftMessage){
+    draftMessage.value = ""
+  }
+
+  sendMessageTo(draftMessage, currentOpenedTab){
+    this.clearDraftMessage(draftMessage)
   }
 }
 

@@ -7,80 +7,79 @@
 </div> -->
 
 <section class="chat-container">
-
   <div class="chatbox">
-    <div *ngIf="errorMsg" class="infomsg">{{errorMsg}}</div>
-    <div class="enter-chat" *ngIf="!chatuser">
+    <div *ngIf="errorMsg" class="infomsg">{{ errorMsg }}</div>
+    <article class="enter-chat" *ngIf="!chatuser">
       <button (click)="enterChat(username.value)">enter chat</button>
-      <input #username value="" placeholder="type your name here" type="text">
-    </div>
-
+      <input #username value="" placeholder="type your name here" type="text" />
+    </article>
 
     <article class="chat-tabs">
-      <button 
-      (click)="swichToConversationWith(tab)"
-      [class.active-tab]="currentOpenedTab === tab" 
-      *ngFor="let tab of activeTabs"
-      >{{tab}}</button>
-    </article>  
-    <!-- <div *ngIf="chatuser">
-      <button (click)="enterChat(username.value)">send message</button>
-      <input #username value="name" type="text">
-    </div> -->
+      <button
+        (click)="swichToConversationWith(tab)"
+        [class.active-tab]="currentOpenedTab === tab"
+        *ngFor="let tab of activeTabs"
+      >
+        {{ tab }}
+      </button>
+    </article>
+
+    <article class="msg-draft-container" *ngIf="chatuser && currentOpenedTab">
+      <textarea class="msg-draft-text" #draftMessage></textarea>
+      <div class="msg-draft-btns">
+        <button (click)="sendMessageTo(draftMessage, currentOpenedTab)">
+          send message to {{ currentOpenedTab }}
+        </button>
+        <button (click)="clearDraftMessage(draftMessage)">Clear</button>
+      </div>
+    </article>
   </div>
 
   <div class="userlist">
-    <button  
-    *ngFor="let user of activeUsers"
-    (click)="startNewConversation(user)"
-    class="active-user" 
-    >{{user.username}}
+    <button
+      *ngFor="let user of activeUsers"
+      (click)="startNewConversation(user)"
+      class="active-user"
+    >
+      {{ user.username }}
     </button>
   </div>
 </section>
-<br><br><br>
+<br /><br /><br />
 <form [formGroup]="mainForm">
-    <div id="user-data">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input 
-        type="text"  
-        id="username"           
+  <div id="user-data">
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
         class="form-control"
-        formControlName="username"  
-        >
-      </div>
-      
-      <div class="form-group">
-        <label for="email">Mail</label>
-        <input 
-        type="text" 
-        id="email" 
-        class="form-control"
-        formControlName="email"  
-        >
-      </div>
-      
-    </div>
-    
-   
-    <div class="radio" *ngFor="let gender of genders">
-        
-      <label>
-        <input 
-        type="radio"
-        name="gender"          
-        [value]="gender"
-        formControlName="gender"  
-        >
-        {{ gender }}   
-        
-      </label>
+        formControlName="username"
+      />
     </div>
 
-    <button #saveBtn
-    class="btn btn-primary" 
-    type="button"
-    
-    >save</button>
-  </form>
+    <div class="form-group">
+      <label for="email">Mail</label>
+      <input
+        type="text"
+        id="email"
+        class="form-control"
+        formControlName="email"
+      />
+    </div>
+  </div>
+
+  <div class="radio" *ngFor="let gender of genders">
+    <label>
+      <input
+        type="radio"
+        name="gender"
+        [value]="gender"
+        formControlName="gender"
+      />
+      {{ gender }}
+    </label>
+  </div>
+
+  <button #saveBtn class="btn btn-primary" type="button">save</button>
+</form>
