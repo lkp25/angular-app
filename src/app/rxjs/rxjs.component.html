@@ -24,6 +24,17 @@
       </button>
     </article>
 
+    <article class="conversation-display">
+      <div class="conversation-line-container" [class.me]="sentence.sender === 'me'"
+      *ngFor="
+      let sentence of currentConversationsArchive[currentOpenedTab]?.messages; let i = index
+      ">
+      <span class="conversation-line-sender">{{sentence.sender}}</span>
+      <p  class="conversation-line-message">{{sentence.msg}}</p>
+      
+    </div>
+    </article>
+
     <article class="msg-draft-container" *ngIf="chatuser && currentOpenedTab">
       <textarea class="msg-draft-text" #draftMessage></textarea>
       <div class="msg-draft-btns">

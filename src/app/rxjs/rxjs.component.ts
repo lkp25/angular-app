@@ -18,7 +18,7 @@ export class RxjsComponent implements OnInit, AfterViewInit {
   activeTabs = []
   currentOpenedTab
   activeUsers = []
-  currentConversations = []
+  currentConversationsArchive = {}
   
 @ViewChild('saveBtn') saveBtn: ElementRef
 
@@ -196,6 +196,9 @@ savetoDB(changes){
     //if starting new conversation, make it active one
     this.swichToConversationWith(user.username)
     
+    //initilize the ARCHIVE for this conversation:
+    this.currentConversationsArchive[user.username] = {messages: []}
+    
   }
 
   swichToConversationWith(tab){
@@ -207,7 +210,14 @@ savetoDB(changes){
   }
 
   sendMessageTo(draftMessage, currentOpenedTab){
+    //copy msg content and clear textarea
+    const message = draftMessage.value
     this.clearDraftMessage(draftMessage)
+    //save msg in the main store under appropriate record:
+    
+    this.currentConversationsArchive[currentOpenedTab].messages.push({sender: 'me', msg:message})
+    console.log(this.currentConversationsArchive);
+    
   }
 }
 

@@ -65,3 +65,20 @@
     overflow-y: scroll;
     border: 2px solid rgb(41, 4, 41);
 }
+.conversation-line-container{
+    padding: 1rem;
+}
+
+   
+
+.conversation-line-sender{
+    font-size: 0.8rem;
+    
+    display: block;
+
+    font-weight: bold;
+}
+.me{
+    text-align: right;
+    background-color: rgb(228, 200, 165);
+}
