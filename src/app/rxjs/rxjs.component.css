@@ -14,12 +14,32 @@
     height: 30px;
     width: 100%;
     background-color: rgba(128, 128, 128, 0.507);
+    display: flex;
+}
+.chat-tab{
+    min-width: 50px;
+    margin: 0.1rem;
 }
 .active-tab{
     color: blue;
     font-weight: bold;
     background-color: wheat;
 }
+.kill-tab-btn{
+    position: absolute;
+    background-color: rgba(32, 8, 8, 0.89);
+    color: wheat;
+    font-weight: bold;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    transform: translate(-100%, -30%);
+}
+.kill-tab-btn:hover{
+    background-color: rgba(255, 9, 9, 0.89);
+    cursor: pointer;
+}
+
 .enter-chat{
     position: absolute;
     bottom: 0;

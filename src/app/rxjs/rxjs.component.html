@@ -15,24 +15,33 @@
     </article>
 
     <article class="chat-tabs">
-      <button
-        (click)="swichToConversationWith(tab)"
-        [class.active-tab]="currentOpenedTab === tab"
-        *ngFor="let tab of activeTabs"
-      >
-        {{ tab }}
-      </button>
+      <div *ngFor="let tab of activeTabs">
+
+        <button
+          (click)="swichToConversationWith(tab)"
+          class="chat-tab"
+          [class.active-tab]="currentOpenedTab === tab"
+        >
+          {{ tab }}
+        </button>
+        <span class="kill-tab-btn"></span>
+
+      </div>
     </article>
 
     <article class="conversation-display">
-      <div class="conversation-line-container" [class.me]="sentence.sender === 'me'"
-      *ngFor="
-      let sentence of currentConversationsArchive[currentOpenedTab]?.messages; let i = index
-      ">
-      <span class="conversation-line-sender">{{sentence.sender}}</span>
-      <p  class="conversation-line-message">{{sentence.msg}}</p>
-      
-    </div>
+      <div
+        class="conversation-line-container"
+        [class.me]="sentence.sender === 'me'"
+        *ngFor="
+          let sentence of currentConversationsArchive[currentOpenedTab]
+            ?.messages;
+          let i = index
+        "
+      >
+        <span class="conversation-line-sender">{{ sentence.sender }}</span>
+        <p class="conversation-line-message">{{ sentence.msg }}</p>
+      </div>
     </article>
 
     <article class="msg-draft-container" *ngIf="chatuser && currentOpenedTab">
@@ -56,14 +65,6 @@
     </button>
   </div>
 </section>
-
-
-
-
-
-
-
-
 
 <br /><br /><br />
 <form [formGroup]="mainForm">

@@ -156,7 +156,12 @@ savetoDB(changes){
 // 
 // ======================================================================
 //   ======================================================================
-  enterChat(username){    
+  enterChat(username){   
+    //look who is in:
+    this.wss.listen('current-user-list').subscribe((activeUsers: any[]) => 
+      this.activeUsers = activeUsers)
+    
+
     this.RSA.getPublicKey().pipe(take(1)).subscribe( async (key) => {
       //after obtaining public key, send it to server with username
       if(key){
@@ -199,8 +204,9 @@ savetoDB(changes){
     this.receiveMessages()
   }
   
-  receiveMessages(){
 
+
+  receiveMessages(){
     let sender
     let message
     this.wss.listen('send-message').subscribe((value: any) => {
@@ -210,13 +216,17 @@ savetoDB(changes){
       if(!this.currentConversationsArchive[sender]){
         this.currentConversationsArchive[sender] = {messages: []}
       }
+      //push new message to appropriate archive:
       this.currentConversationsArchive[sender]
       .messages.push({
         sender: sender,
         msg: message
       })
 
-      this.activeTabs.push(sender)
+      //conversation already started? dont activate new tab, else activate new tab
+      if(!this.activeTabs.includes(sender)){
+        this.activeTabs.push(sender)
+      }
       this.swichToConversationWith(sender)
     })
     console.log(this.currentConversationsArchive);
