@@ -149,8 +149,13 @@ savetoDB(changes){
     ) 
      
   }
-
-
+// ======================================================================
+//   ======================================================================
+// ======================================================================
+// ======================================================================
+// 
+// ======================================================================
+//   ======================================================================
   enterChat(username){    
     this.RSA.getPublicKey().pipe(take(1)).subscribe( async (key) => {
       //after obtaining public key, send it to server with username
@@ -185,13 +190,42 @@ savetoDB(changes){
             
           }
         })
-         
-
+        
+        
       }
       
     })
     //unable receiving messages:
     this.receiveMessages()
+  }
+  
+  receiveMessages(){
+
+    let sender
+    let message
+    this.wss.listen('send-message').subscribe((value: any) => {
+      sender = value.sender
+      message = value.message
+      //initialize the archive if not yet initialized:
+      if(!this.currentConversationsArchive[sender]){
+        this.currentConversationsArchive[sender] = {messages: []}
+      }
+      this.currentConversationsArchive[sender]
+      .messages.push({
+        sender: sender,
+        msg: message
+      })
+
+      this.activeTabs.push(sender)
+      this.swichToConversationWith(sender)
+    })
+    console.log(this.currentConversationsArchive);
+    
+    //from who? 
+    
+
+    //open tab or add msg to opened tab
+    //add msg to store
   }
 
   startNewConversation(user){
@@ -217,8 +251,8 @@ savetoDB(changes){
       ).then(realKey => 
         this.importedPublicKeys[user.username] = realKey)
       
-      
-    //not opened? create new conversation:
+        
+        //not opened? create new conversation:
     this.activeTabs.push(user.username)
     //if starting new conversation, make it active one
     this.swichToConversationWith(user.username)
@@ -228,40 +262,37 @@ savetoDB(changes){
     
     
   }
-
+  
   swichToConversationWith(tab){
     this.currentOpenedTab = tab
   }
-
+  
   clearDraftMessage(draftMessage){
     draftMessage.value = ""
   }
 
-  receiveMessages(){
-    this.wss.listen('send-message').subscribe(value => console.log(value)
-    )
-  }
 
   sendMessageTo(draftMessage, currentOpenedTab){
-    //copy msg content and clear textarea
-    
+    //copy msg content and clear textarea    
+    const message = draftMessage.value
+    this.clearDraftMessage(draftMessage)
+
+    //get ID of receiver
     const userIndex = this.activeUsers.findIndex(u=>{
       return u.username === currentOpenedTab
     })
-    console.log(userIndex);
-    
+    console.log(userIndex);    
     const roomID = this.activeUsers[userIndex].id
-    console.log(roomID);
+    console.log(roomID);    
     
-    
-    const message = draftMessage.value
-    this.clearDraftMessage(draftMessage)
-    //save msg in the main store under appropriate record:
-    
+    //save msg in the main store for the sender under appropriate record:    
     this.currentConversationsArchive[currentOpenedTab].messages.push({sender: 'me', msg:message})
     console.log(this.currentConversationsArchive);
     
-    this.wss.emit('send-message', {message, roomID})
+    const sender = this.chatuser
+
+    //emit ready message
+    this.wss.emit('send-message', {message, roomID, sender})
   }
 }
 
