@@ -297,6 +297,8 @@ export class RxjsComponent implements OnInit, AfterViewInit {
     draftMessage.value = '';
   }
 
+
+
   sendMessageTo(draftMessage, currentOpenedTab) {
     //copy msg content and clear textarea
     const message = draftMessage.value;
@@ -316,15 +318,41 @@ export class RxjsComponent implements OnInit, AfterViewInit {
       msg: message,
     });
     console.log(this.currentConversationsArchive);
-
+    //specify sender name
     const sender = this.chatuser;
 
-    //emit ready message
-    this.wss.emit('send-message', { message, roomID, sender });
-    //FOCUS DISPLAY ON LAST MSG
-    setTimeout(() => {
-      this.focusDisplayOnLastMessage();
-    }, 100);
+    //get public key of receiver:
+    const publicKey = this.importedPublicKeys[currentOpenedTab]
+
+    // encrypt message:
+    let encryptedMessage
+    const enc = new TextEncoder();
+    const encodedMessage = enc.encode(message);
+    window.crypto.subtle.encrypt(
+      {
+        name: "RSA-OAEP"
+      },
+      publicKey,
+      encodedMessage
+    ).then(encrypdedMsg => {
+      encryptedMessage = encrypdedMsg
+      // let buffer = new Uint8Array(this.encrypdedMsg, 0, 5);
+      console.log(encrypdedMsg.toString());
+      
+       //emit ready message
+       this.wss.emit('send-message', { message: encrypdedMsg, roomID, sender });
+       //FOCUS DISPLAY ON LAST MSG
+       setTimeout(() => {
+         this.focusDisplayOnLastMessage();
+       }, 100);
+    })
+
+    
+
+    
+     
+
+    
   }
 
   focusDisplayOnLastMessage() {
