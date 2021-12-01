@@ -44,6 +44,7 @@ import { RSAService } from './RSA.service';
 })
 export class RxjsComponent implements OnInit, AfterViewInit {
   @ViewChild('chatbox') chatbox: ElementRef;
+  PRIVATE_KEY
   chatuser;
   errorMsg;
   activeTabs = [];
@@ -70,6 +71,9 @@ export class RxjsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     //generate new key every time this tab is activated
     this.RSA.generateKey();
+    this.RSA.getPrivateKey().subscribe(value => {
+      this.PRIVATE_KEY = value
+    })
 
     this.mainForm = new FormGroup({
       username: new FormControl('default', Validators.required),
@@ -229,9 +233,23 @@ export class RxjsComponent implements OnInit, AfterViewInit {
   receiveMessages() {
     let sender;
     let message;
-    this.wss.listen('send-message').subscribe((value: any) => {
+    this.wss.listen('send-message').subscribe(async (value: any) => {
+      const decryptedMessage = await window.crypto.subtle.decrypt(
+        {
+          name: "RSA-OAEP"
+        },
+        this.PRIVATE_KEY,
+        value.message
+      );  
+      //text after decryption is still encoded - needs decoding:    
+      const dec = new TextDecoder();       
+      const result = dec.decode(decryptedMessage);
+      
+      
       sender = value.sender;
-      message = value.message;
+      message = result;
+
+
       //initialize the archive if not yet initialized:
       if (!this.currentConversationsArchive[sender]) {
         this.currentConversationsArchive[sender] = { messages: [] };
