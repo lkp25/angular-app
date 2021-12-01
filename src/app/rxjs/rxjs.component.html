@@ -1,13 +1,7 @@
-<!-- <p>rxjs works!</p>
-<div *ngFor="let todo of filteredTodosHigh | async">
-    <p>{{todo | json}}</p>
-</div>
-<div *ngFor="let todo of filteredTodosSmall | async">
-    <p>{{todo | json}}</p>
-</div> -->
+<h2>your current alias: {{ chatuser }}</h2>
 
 <section class="chat-container">
-  <div class="chatbox">
+  <div #chatbox class="chatbox">
     <div *ngIf="errorMsg" class="infomsg">{{ errorMsg }}</div>
     <article class="enter-chat" *ngIf="!chatuser">
       <button (click)="enterChat(username.value)">enter chat</button>
@@ -16,7 +10,6 @@
 
     <article class="chat-tabs">
       <div *ngFor="let tab of activeTabs">
-
         <button
           (click)="swichToConversationWith(tab)"
           class="chat-tab"
@@ -24,12 +17,14 @@
         >
           {{ tab }}
         </button>
-        <span class="kill-tab-btn"></span>
-
+        <span
+          class="kill-tab-btn"
+          (click)="endConversation(currentOpenedTab)"
+        ></span>
       </div>
     </article>
 
-    <article class="conversation-display">
+    <article  class="conversation-display">
       <div
         class="conversation-line-container"
         [class.me]="sentence.sender === 'me'"
@@ -43,16 +38,6 @@
         <p class="conversation-line-message">{{ sentence.msg }}</p>
       </div>
     </article>
-
-    <article class="msg-draft-container" *ngIf="chatuser && currentOpenedTab">
-      <textarea class="msg-draft-text" #draftMessage></textarea>
-      <div class="msg-draft-btns">
-        <button (click)="sendMessageTo(draftMessage, currentOpenedTab)">
-          send message to {{ currentOpenedTab }}
-        </button>
-        <button (click)="clearDraftMessage(draftMessage)">Clear</button>
-      </div>
-    </article>
   </div>
 
   <div class="userlist">
@@ -64,6 +49,16 @@
       {{ user.username }}
     </button>
   </div>
+
+  <article class="msg-draft-container" *ngIf="chatuser && currentOpenedTab">
+    <textarea class="msg-draft-text" #draftMessage></textarea>
+    <div class="msg-draft-btns">
+      <button (click)="sendMessageTo(draftMessage, currentOpenedTab)">
+        send message to {{ currentOpenedTab }}
+      </button>
+      <button (click)="clearDraftMessage(draftMessage)">Clear</button>
+    </div>
+  </article>
 </section>
 
 <br /><br /><br />
