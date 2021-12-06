@@ -264,7 +264,9 @@ export class RxjsComponent implements OnInit, AfterViewInit {
       if (!this.activeTabs.includes(sender)) {
         this.activeTabs.push(sender);
       }
+      //first message - GET PUBLIC KEY OF SENDER TO REPLY HIM and switch to his tab
       this.swichToConversationWith(sender);
+      this.getPublicKeyOfCurrentPeer(sender)
 
       //FOCUS DISPLAY ON LAST MSG
       setTimeout(() => {
@@ -280,8 +282,36 @@ export class RxjsComponent implements OnInit, AfterViewInit {
       return;
     }
     //import PUBLIC KEY from portable object for current peer:
+    // const indexOfCurrentPeer = this.activeUsers.findIndex((u) => {
+    //   return u.username === user.username;
+    // });
+    // const portablePublicKey = this.activeUsers[indexOfCurrentPeer].key;
+    // console.log(indexOfCurrentPeer);
+    // const realPublicKey = window.crypto.subtle
+    //   .importKey(
+    //     'jwk',
+    //     portablePublicKey,
+    //     {
+    //       name: 'RSA-OAEP',
+    //       hash: 'SHA-256',
+    //     },
+    //     true,
+    //     ['encrypt']
+    //   )
+    //   .then((realKey) => (this.importedPublicKeys[user.username] = realKey));
+    this.getPublicKeyOfCurrentPeer(user.username)
+
+    //not opened? create new conversation:
+    this.activeTabs.push(user.username);
+    //if starting new conversation, make it active one
+    this.swichToConversationWith(user.username);
+
+    //initilize the ARCHIVE for this conversation:
+    this.currentConversationsArchive[user.username] = { messages: [] };
+  }
+  getPublicKeyOfCurrentPeer(peerName){
     const indexOfCurrentPeer = this.activeUsers.findIndex((u) => {
-      return u.username === user.username;
+      return u.username === peerName;
     });
     const portablePublicKey = this.activeUsers[indexOfCurrentPeer].key;
     console.log(indexOfCurrentPeer);
@@ -296,15 +326,7 @@ export class RxjsComponent implements OnInit, AfterViewInit {
         true,
         ['encrypt']
       )
-      .then((realKey) => (this.importedPublicKeys[user.username] = realKey));
-
-    //not opened? create new conversation:
-    this.activeTabs.push(user.username);
-    //if starting new conversation, make it active one
-    this.swichToConversationWith(user.username);
-
-    //initilize the ARCHIVE for this conversation:
-    this.currentConversationsArchive[user.username] = { messages: [] };
+      .then((realKey) => (this.importedPublicKeys[peerName] = realKey));
   }
 
   swichToConversationWith(tab) {
@@ -341,7 +363,8 @@ export class RxjsComponent implements OnInit, AfterViewInit {
 
     //get public key of receiver:
     const publicKey = this.importedPublicKeys[currentOpenedTab]
-
+    console.log(publicKey);
+    
     // encrypt message:
     let encryptedMessage
     const enc = new TextEncoder();

@@ -23,54 +23,49 @@ export class RSAService{
         Fetch the contents of the "message" textbox, and encode it
         in a form we can use for the encrypt operation.
         */
-        private getMessageEncoding() {
-          const messageBox = document.querySelector("#rsa-oaep-message");
-          let message = 'messageBox';
-          let enc = new TextEncoder();
-          return enc.encode(message);
-        }
+        // private getMessageEncoding() {
+        //   const messageBox = document.querySelector("#rsa-oaep-message");
+        //   let message = 'messageBox';
+        //   let enc = new TextEncoder();
+        //   return enc.encode(message);
+        // }
       
         /*
         Get the encoded message, encrypt it and display a representation
         of the ciphertext in the "Ciphertext" element.
         */
-        public async encryptMessage(publicKey) {
-          let encoded = this.getMessageEncoding();
-          this.ciphertext = await window.crypto.subtle.encrypt(
-            {
-              name: "RSA-OAEP"
-            },
-            publicKey,
-            encoded
-          );
+        // public async encryptMessage(publicKey) {
+        //   let encoded = this.getMessageEncoding();
+        //   this.ciphertext = await window.crypto.subtle.encrypt(
+        //     {
+        //       name: "RSA-OAEP"
+        //     },
+        //     publicKey,
+        //     encoded
+        //   );
       
-          let buffer = new Uint8Array(this.ciphertext, 0, 5);
+        //   let buffer = new Uint8Array(this.ciphertext, 0, 5);
           
-          console.log(`${buffer}...[${this.ciphertext.byteLength} bytes total]`);
+        //   console.log(`${buffer}...[${this.ciphertext.byteLength} bytes total]`);
           
-        }
+        // }
       
-        /*
-        Fetch the ciphertext and decrypt it.
-        Write the decrypted message into the "Decrypted" box.
-        */
-        public async decryptMessage(privateKey) {
-          let decrypted = await window.crypto.subtle.decrypt(
-            {
-              name: "RSA-OAEP"
-            },
-            privateKey,
-            this.ciphertext
-          );
-      
-          let dec = new TextDecoder();
-          const decryptedValue = document.querySelector(".rsa-oaep .decrypted-value");
-          decryptedValue.classList.add('fade-in');
-          decryptedValue.addEventListener('animationend', () => {
-            decryptedValue.classList.remove('fade-in');
-          });
-          decryptedValue.textContent = dec.decode(decrypted);
-        }
+        // /*
+        // Fetch the ciphertext and decrypt it.
+        // Write the decrypted message into the "Decrypted" box.
+        // */
+        // public async decryptMessage(privateKey) {
+        //   let decrypted = await window.crypto.subtle.decrypt(
+        //     {
+        //       name: "RSA-OAEP"
+        //     },
+        //     privateKey,
+        //     this.ciphertext
+        //   );      
+        //   let dec = new TextDecoder();         
+          
+        //   let result = dec.decode(decrypted);
+        // }
       
         /*
         Generate an encryption key pair, then set up event listeners
