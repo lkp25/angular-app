@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  HostListener,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -44,22 +45,27 @@ import { RSAService } from './RSA.service';
 })
 export class RxjsComponent implements OnInit, AfterViewInit {
   @ViewChild('chatbox') chatbox: ElementRef;
+  @ViewChild('sendButton') sendButton: ElementRef;
+  @ViewChild('draftMessage') draftMessage: ElementRef;
+  @ViewChild('username') username: ElementRef;
   PRIVATE_KEY
   chatuser;
   errorMsg;
   activeTabs = [];
   currentOpenedTab;
-  activeUsers = [];
-  // activeUsers$ = of(this.activeUsers)
+  activeUsers = [];  
   currentConversationsArchive = {};
   importedPublicKeys = {};
 
-  @ViewChild('saveBtn') saveBtn: ElementRef;
 
+
+////////////////////////////////////////////
+  @ViewChild('saveBtn') saveBtn: ElementRef;
   filteredTodosHigh: Observable<any[] | Object>;
   filteredTodosSmall: Observable<any[] | Object>;
   obs1$: Observable<number>;
   genders = ['male', 'female', 'other'];
+  ////////////////////////////////////////////
 
   mainForm: FormGroup;
   constructor(
@@ -280,25 +286,7 @@ export class RxjsComponent implements OnInit, AfterViewInit {
     //ignore action if tab is already opened
     if (this.activeTabs.find((name) => name === user.username)) {
       return;
-    }
-    //import PUBLIC KEY from portable object for current peer:
-    // const indexOfCurrentPeer = this.activeUsers.findIndex((u) => {
-    //   return u.username === user.username;
-    // });
-    // const portablePublicKey = this.activeUsers[indexOfCurrentPeer].key;
-    // console.log(indexOfCurrentPeer);
-    // const realPublicKey = window.crypto.subtle
-    //   .importKey(
-    //     'jwk',
-    //     portablePublicKey,
-    //     {
-    //       name: 'RSA-OAEP',
-    //       hash: 'SHA-256',
-    //     },
-    //     true,
-    //     ['encrypt']
-    //   )
-    //   .then((realKey) => (this.importedPublicKeys[user.username] = realKey));
+    }    
     this.getPublicKeyOfCurrentPeer(user.username)
 
     //not opened? create new conversation:
@@ -309,6 +297,8 @@ export class RxjsComponent implements OnInit, AfterViewInit {
     //initilize the ARCHIVE for this conversation:
     this.currentConversationsArchive[user.username] = { messages: [] };
   }
+
+
   getPublicKeyOfCurrentPeer(peerName){
     const indexOfCurrentPeer = this.activeUsers.findIndex((u) => {
       return u.username === peerName;
@@ -337,7 +327,14 @@ export class RxjsComponent implements OnInit, AfterViewInit {
     draftMessage.value = '';
   }
 
+  @HostListener('window:keydown', ['$event'])
+  sendMessageOnEnterKey(event: KeyboardEvent){
+    if(event.key === 'Enter'){
 
+      console.log(event.key);
+
+    }
+  }
 
   sendMessageTo(draftMessage, currentOpenedTab) {
     //copy msg content and clear textarea

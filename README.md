@@ -20,7 +20,9 @@ What makes the chat app really impressive though is that it uses Asymmetric Key 
 
 Fortunately, most browsers provide an API for that - a global 'crypto' object. After user is 'logged-in' the crypto library generates a key-pair for this user. Private key is ONLY STORED IN THE RUNTIME MEMORY. It is never persisted to local storage or sent to the server. It is kept private for each and every client and is only valid for the duration of the session - until user closes this tab.
 
-The public key however must be sent to the server and shared with all the users who want to send messages to this client. It is however less straightforward than one would expect - the public key is of type Crypto Key, which is a large binary object and cannot be simply strigified to JSON format. Instead it has to be encoded and exported using the crypto API to create a portable format that can be sent to the server. This portable format is not suitable for encrypting messages with it though - therefore it must be decoded and imported to the other client's browser memory in order to use it after it was obtained from the server. 
+The public key however must be sent to the server and shared with all the users who want to send messages to this client. It is however less straightforward than one would expect - the public key is of type Crypto Key, which is a large binary object and cannot be simply strigified to JSON format. Instead it has to be encoded and exported using the crypto API to create a portable format that can be sent to the server. This portable format is not suitable for encrypting messages with it though - therefore it must be decoded and imported to the other client's browser memory in order to use it after it was obtained from the server.
+
+All the complicated logic is abstracted away from the user and the chat could not be simplier to use. It uses safe RSA-OAEP algorhytm with 4096 key length.
 
 
 

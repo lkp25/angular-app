@@ -5,6 +5,7 @@
 <section class="chat-container">
   <div #chatbox class="chatbox">
     <div *ngIf="errorMsg" class="infomsg">{{ errorMsg }}</div>
+    
     <article class="enter-chat" *ngIf="!chatuser">
       <button (click)="enterChat(username.value)">enter chat</button>
       <input #username value="" placeholder="type your name here" type="text" />
@@ -55,7 +56,7 @@
   <article class="msg-draft-container" *ngIf="chatuser && currentOpenedTab">
     <textarea class="msg-draft-text" #draftMessage></textarea>
     <div class="msg-draft-btns">
-      <button (click)="sendMessageTo(draftMessage, currentOpenedTab)">
+      <button #sendButton (click)="sendMessageTo(draftMessage, currentOpenedTab)">
         send message to {{ currentOpenedTab }}
       </button>
       <button (click)="clearDraftMessage(draftMessage)">Clear</button>
