@@ -87,6 +87,7 @@
 }
 .conversation-line-container{
     padding: 1rem;
+    word-break: break-all;
 }
 
    

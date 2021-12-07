@@ -336,7 +336,7 @@ export class RxjsComponent implements OnInit, AfterViewInit {
         return this.enterChat(nameInput.value)
       }
       if(msgTextarea){
-        return this.sendMessageTo(this.draftMessage, this.currentOpenedTab)
+        return this.sendMessageTo(this.draftMessage.nativeElement, this.currentOpenedTab)
       }
       console.log(event.key);
 
