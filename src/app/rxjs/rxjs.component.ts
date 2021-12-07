@@ -330,7 +330,14 @@ export class RxjsComponent implements OnInit, AfterViewInit {
   @HostListener('window:keydown', ['$event'])
   sendMessageOnEnterKey(event: KeyboardEvent){
     if(event.key === 'Enter'){
-
+      const nameInput = this.username?.nativeElement || null
+      const msgTextarea = this.draftMessage?.nativeElement || null
+      if(nameInput && nameInput.value !== ''){
+        return this.enterChat(nameInput.value)
+      }
+      if(msgTextarea){
+        return this.sendMessageTo(this.draftMessage, this.currentOpenedTab)
+      }
       console.log(event.key);
 
     }
